@@ -152,7 +152,7 @@ button:focus {
   right: 0;
   bottom: 0;
   left: 0;
-  background: #ffd8da;
+  background: rgb(251, 193, 196);
   z-index: 11000;
   position: fixed;
   display: block;

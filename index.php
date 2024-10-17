@@ -36,7 +36,7 @@
 	
     <div id="preloader">
 		<div class="preloader pulse">
-			<i class="fa fa-heart" aria-hidden="true"></i>
+			<img src="images/bee.png" aria-hidden="true" width="50px">
 		</div>
     </div>
     
