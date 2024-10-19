@@ -31,7 +31,7 @@
    
 
 </head>
-<body id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98" >
+<body  id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98" >
 
 	
     <div id="preloader">
@@ -67,41 +67,51 @@
 	</header>
 
 
+	<?php
+
+include 'inc/config.php';
+
+
+$carouselImages = [];
+$sqlImages = "SELECT * FROM carousel";
+$resultImages = $conn->query($sqlImages);
+if ($resultImages->num_rows > 0) {
+    while($row = $resultImages->fetch_assoc()) {
+        $carouselImages[] = $row; 
+    }
+}
+
+$carouselText = [];
+$sqlText = "SELECT * FROM carousel_text LIMIT 1"; 
+$resultText = $conn->query($sqlText);
+if ($resultText->num_rows > 0) {
+    $carouselText = $resultText->fetch_assoc();
+}
+?>
+
 	<div class="ulockd-home-slider">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="pogoSlider" id="js-main-slider">
-					<div class="pogoSlider-slide" data-transition="zipReveal" data-duration="1500" style="background-image:url(images/slider-01.jpg);">
-						<div class="lbox-caption">
-							<div class="lbox-details">
-								<h1>Wedding By Bees</h1>
-								<h2>Your wedding is a movie, and I'll take you Beyond the Script.</h3>
-								<p>Save The Date <strong>20 June 2018</strong></p>
-								<a href="#" class="btn ">Contact</a>
-							</div>
-						</div>
-					</div>
-					<div class="pogoSlider-slide" data-transition="blocksReveal" data-duration="1500" style="background-image:url(images/slider-02.jpg);">
-						<div class="lbox-caption">
-							<div class="lbox-details">
-								<h1>#Leida & #Dominic</h1>
-								<h2>We're getting married</h3>
-								<p>Save The Date <strong>20 June 2018</strong></p>
-								<a href="#" class="btn ">Contact</a>
-							</div>
-						</div>
-					</div>
-					<div class="pogoSlider-slide" data-transition="shrinkReveal" data-duration="2000" style="background-image:url(images/slider-03.jpg);">
-						<div class="lbox-caption">
-							<div class="lbox-details">
-								<h1>#Leida & #Dominic</h1>
-								<h2>We're getting married</h3>
-								<p>Save The Date <strong>20 June 2018</strong></p>
-								<a href="#" class="btn">Contact</a>
-							</div>
-						</div>
+				
+						<?php
 						
-					</div>
+						foreach ($carouselImages as $key => $image) {
+						?>
+							<div class="pogoSlider-slide" data-transition="fade" data-duration="1500" style="background-image:url(<?php echo 'images/carousel/' . $image['image']; ?>);">
+								<div class="lbox-caption">
+									<div class="lbox-details">
+										<h1 style="color:yellow;"><?php echo $carouselText['text1']; ?></h1> 
+										<h2><?php echo $carouselText['text2']; ?></h2> 
+										<p><strong> <?php echo $carouselText['text3']; ?> </strong></p>
+										<a href="#contact" class="btn ">Contact</a>
+									</div>
+								</div>
+							</div>
+						<?php
+						}
+						?>
+   
 				</div>
 			</div>
 		</div>
