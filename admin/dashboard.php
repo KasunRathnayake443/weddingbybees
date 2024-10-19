@@ -18,8 +18,8 @@ $admin = $result->fetch_assoc();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding by Bees Admin Dashboard</title>
-      <link rel="stylesheet" href="../css/carousel.css">
+    <?php include '../inc/title.php'?>
+      <link rel="stylesheet" href="../css/dashboard.css">
    
 </head>
 <body>
@@ -73,8 +73,11 @@ if ($result && $result->num_rows > 0) {
         <img src="../images/logo/<?php echo $settings['logo']; ?>" alt="Logo" width="100">
 
  
-        <label for="about_us_text">About Us Text:</label>
+        <label for="about_us_text">About Us Text 1:</label>
         <textarea name="about_us_text" required><?php echo $settings['about_us_text']; ?></textarea>
+
+        <label for="about_us_text">About Us Text 2:</label>
+        <textarea name="about_us_text_2" required><?php echo $settings['about_us_text_2']; ?></textarea>
 
         <label for="about_us_image1">About Us Image 1:</label>
         <input type="file" name="about_us_image1">
@@ -121,8 +124,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $phone = $_POST['phone'];
     $address = $_POST['address'];
     $about_us_text = $_POST['about_us_text'];
+    $about_us_text_2 = $_POST['about_us_text_2'];
 
-    // Handle logo upload
+  
     $logo = $_POST['current_logo'];
     if (!empty($_FILES['logo']['name'])) {
         $logo_dir = '../images/logo/';
@@ -157,9 +161,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
    
-    $sql = "UPDATE general_settings SET website_name = ?, facebook_url = ?, instagram_url = ?, phone = ?, address = ?, logo = ?, about_us_text = ?, about_us_image1 = ?, about_us_image2 = ? WHERE id = 1";
+    $sql = "UPDATE general_settings SET website_name = ?, facebook_url = ?, instagram_url = ?, phone = ?, address = ?, logo = ?, about_us_text = ?, about_us_text_2 =? , about_us_image1 = ?, about_us_image2 = ? WHERE id = 1";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sssssssss', $website_name, $facebook_url, $instagram_url, $phone, $address, $logo, $about_us_text, $about_us_image1, $about_us_image2);
+    $stmt->bind_param('ssssssssss', $website_name, $facebook_url, $instagram_url, $phone, $address, $logo, $about_us_text,$about_us_text_2 ,$about_us_image1, $about_us_image2);
 
     if ($stmt->execute()) {
         echo "<script> document.location='dashboard.php?notifications1=1';</script>";

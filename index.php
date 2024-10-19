@@ -1,3 +1,32 @@
+<?php
+
+include 'inc/config.php';
+
+
+$carouselImages = [];
+$sqlImages = "SELECT * FROM carousel";
+$resultImages = $conn->query($sqlImages);
+if ($resultImages->num_rows > 0) {
+    while($row = $resultImages->fetch_assoc()) {
+        $carouselImages[] = $row; 
+    }
+}
+
+$carouselText = [];
+$sqlText = "SELECT * FROM carousel_text LIMIT 1"; 
+$resultText = $conn->query($sqlText);
+if ($resultText->num_rows > 0) {
+    $carouselText = $resultText->fetch_assoc();
+}
+
+
+$sql_general_settings = "SELECT * FROM general_settings WHERE id = 1";
+$result_general_settings = $conn->query($sql_general_settings);
+$general_settings = $result_general_settings->fetch_assoc();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,25 +37,20 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
  
      
-    <title>Wedding By Bees</title>  
+    <title><?php echo $general_settings['website_name']?></title>  
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
 
     
-    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="images/logo/<?php echo $general_settings['logo']?>" type="image/x-icon">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-
-    
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    
     <link rel="stylesheet" href="css/pogo-slider.min.css">
-	
     <link rel="stylesheet" href="css/style.css">    
-   
     <link rel="stylesheet" href="css/responsive.css">
-    
     <link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/alerts.css">
 
    
 
@@ -45,7 +69,7 @@
 	<header class="top-header">
 		<nav class="navbar header-nav navbar-expand-lg">
             <div class="container">
-				<a class="navbar-brand" href="index.html"><img src="images/logo.png" height="60px" alt="image"></a>
+				<a class="navbar-brand" href="index.php"><img src="images/logo/<?php echo $general_settings['logo']?>" height="60px" alt="image"></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-wd" aria-controls="navbar-wd" aria-expanded="false" aria-label="Toggle navigation">
 					<span></span>
 					<span></span>
@@ -67,27 +91,7 @@
 	</header>
 
 
-	<?php
 
-include 'inc/config.php';
-
-
-$carouselImages = [];
-$sqlImages = "SELECT * FROM carousel";
-$resultImages = $conn->query($sqlImages);
-if ($resultImages->num_rows > 0) {
-    while($row = $resultImages->fetch_assoc()) {
-        $carouselImages[] = $row; 
-    }
-}
-
-$carouselText = [];
-$sqlText = "SELECT * FROM carousel_text LIMIT 1"; 
-$resultText = $conn->query($sqlText);
-if ($resultText->num_rows > 0) {
-    $carouselText = $resultText->fetch_assoc();
-}
-?>
 
 	<div class="ulockd-home-slider">
 		<div class="container-fluid">
@@ -116,16 +120,17 @@ if ($resultText->num_rows > 0) {
 			</div>
 		</div>
 	</div>
-	<!-- End Banner -->
 	
-	<!-- Start About us -->
+	
+
+
 	<div id="about" class="about-box">
 		<div class="about-a1">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="title-box">
-							<h2>Leida <span>&</span> Dominic</h2>
+							<h2><?php echo $general_settings['website_name']?></h2>
 						</div>
 					</div>
 				</div>
@@ -133,24 +138,24 @@ if ($resultText->num_rows > 0) {
 					<div class="col-lg-12 col-md-12 col-sm-12">
 						<div class="row align-items-center about-main-info">
 							<div class="col-lg-8 col-md-6 col-sm-12">
-								<h2> About <span>Leida</span></h2>
-								<p>Fusce convallis ante id purus sagittis malesuada. Sed erat ipsum, suscipit sit amet auctor quis, vehicula ut leo. Maecenas felis nulla, tincidunt ac blandit a, consectetur quis elit. Nulla ut magna eu purus cursus sagittis. Praesent fermentum tincidunt varius. Proin sit amet tempus magna. Fusce pellentesque vulputate urna. </p>
+								<h2> About <span>Us</span></h2>
+								<p><?php echo $general_settings['about_us_text']?> </p>
 							</div>
 							<div class="col-lg-4 col-md-6 col-sm-12">
 								<div class="about-img">
-									<img class="img-fluid rounded" src="images/about-img-01.jpg" alt="" />
+									<img class="img-fluid rounded" src="images/about/<?php echo $general_settings['about_us_image1']?>" alt="" >
 								</div>
 							</div>
 						</div>
 						<div class="row align-items-center about-main-info">
 							<div class="col-lg-4 col-md-6 col-sm-12">
 								<div class="about-img">
-									<img class="img-fluid rounded" src="images/about-img-02.jpg" alt="" />
+									<img class="img-fluid rounded" src="images/about/<?php echo $general_settings['about_us_image2']?>" alt="" >
 								</div>
 							</div>
 							<div class="col-lg-8 col-md-6 col-sm-12">
-								<h2> About <span>Dominic</span></h2>
-								<p>Fusce convallis ante id purus sagittis malesuada. Sed erat ipsum, suscipit sit amet auctor quis, vehicula ut leo. Maecenas felis nulla, tincidunt ac blandit a, consectetur quis elit. Nulla ut magna eu purus cursus sagittis. Praesent fermentum tincidunt varius. Proin sit amet tempus magna. Fusce pellentesque vulputate urna. </p>
+								<h2>Our Work in <span>Focus</span></h2>
+								<p><?php echo $general_settings['about_us_text_2']?> </p>
 							</div>
 						</div>
 					</div>
@@ -158,10 +163,10 @@ if ($resultText->num_rows > 0) {
 			</div>
 		</div>
 	</div>
-	<!-- End About us -->
 	
-	<!-- Start Story -->
-	<div id="story" class="story-box main-timeline-box">
+
+
+	<!-- <div id="story" class="story-box main-timeline-box">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
@@ -246,9 +251,9 @@ if ($resultText->num_rows > 0) {
 			
 		</div>
 	</div>
-	<!-- End Story -->
+	 -->
 	
-	<!-- Start Family -->
+	
 	<div id="family" class="family-box">
 		<div class="container">
 			<div class="row">
@@ -396,9 +401,7 @@ if ($resultText->num_rows > 0) {
 			</div>
 		</div>
 	</div>
-	<!-- End Gallery -->
-	
-	<!-- Start Events -->
+
 	<div id="events" class="events-box">
 		<div class="container">
 			<div class="row">
@@ -443,9 +446,7 @@ if ($resultText->num_rows > 0) {
 			</div>
 		</div>
 	</div>
-	<!-- End Events -->
 	
-	<!-- Start Contact -->
 	<div id="contact" class="contact-box">
 		<div class="container">
 			<div class="row">
@@ -459,65 +460,48 @@ if ($resultText->num_rows > 0) {
 			<div class="row">
 				<div class="col-lg-12 col-sm-12 col-xs-12">
 				  <div class="contact-block">
-					<form id="contactForm">
-					  <div class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required data-error="Please enter your name">
-								<div class="help-block with-errors"></div>
-							</div>                                 
-						</div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="text" placeholder="Your Email" id="email" class="form-control" name="name" required data-error="Please enter your email">
-								<div class="help-block with-errors"></div>
-							</div> 
-						</div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<select class="custom-select d-block form-control" id="guest" required data-error="Please select an item in the list.">
-								  <option disabled selected>Number Of Guest*</option>
-								  <option value="1">1</option>
-								  <option value="2">2</option>
-								  <option value="3">3</option>
-								  <option value="4">4</option>
-								  <option value="5">5</option>
-								</select>
-								<div class="help-block with-errors"></div>
-							</div> 
-						</div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<select class="custom-select d-block form-control" id="event" required data-error="Please select an item in the list.">
-								  <option disabled selected>I Am Attending*</option>
-								  <option value="1">All events</option>
-								  <option value="2">Wedding ceremony</option>
-								  <option value="3">Reception party</option>
-								</select>
-								<div class="help-block with-errors"></div>
-							</div> 
-						</div>
-						<div class="col-md-12">
-							<div class="form-group"> 
-								<textarea class="form-control" id="message" placeholder="Your Message" rows="8" data-error="Write your message" required></textarea>
-								<div class="help-block with-errors"></div>
+				  <form id="contactForm" action="index.php" method="post">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<input type="text" class="form-control" id="name" name="name" placeholder="Name" required data-error="Please enter your name">
+									<div class="help-block with-errors"></div>
+								</div>                                 
 							</div>
-							<div class="submit-button text-center">
+							<div class="col-md-12">
+								<div class="form-group">
+									<input type="email" placeholder="Your Email" id="email" class="form-control" name="email" required data-error="Please enter your email">
+									<div class="help-block with-errors"></div>
+								</div> 
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<input type="text" placeholder="Subject" id="subject" class="form-control" name="subject" required data-error="Please enter your subject">
+									<div class="help-block with-errors"></div>
+								</div> 
+							</div>
+							<div class="col-md-12">
+								<div class="form-group"> 
+									<textarea class="form-control" id="message" placeholder="Your Message" name="message" rows="8" data-error="Write your message" required></textarea>
+									<div class="help-block with-errors"></div>
+								</div>
+								<div class="submit-button text-center">
 								<button class="btn btn-common" id="submit" type="submit">Send Message</button>
-								<div id="msgSubmit" class="h3 text-center hidden"></div> 
-								<div class="clearfix"></div> 
+									<div id="msgSubmit" class="h3 text-center hidden"></div> 
+									<div class="clearfix"></div> 
+								</div>
 							</div>
-						</div>
-					  </div>            
+						</div>            
 					</form>
+
 				  </div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- End Contact -->
 	
-	<!-- Start Footer -->
+	
+	
 	<footer class="footer-box">
 		<div class="container">
 			<div class="row">
@@ -527,13 +511,19 @@ if ($resultText->num_rows > 0) {
 			</div>
 		</div>
 	</footer>
-	<!-- End Footer -->
 
-	<!-- ALL JS FILES -->
+				<div class="success2" id="alertBox1">
+                    <i class="fa fa-check  fa-2x"></i> 
+                    <span class="message-text">Message sent successfully</span>                            
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                </div>
+
+
+	<script src="js/notifications.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-    <!-- ALL PLUGINS -->
+ 
 	<script src="js/jquery.magnific-popup.min.js"></script>
     <script src="js/jquery.pogo-slider.min.js"></script> 
 	<script src="js/slider-index.js"></script>
@@ -543,3 +533,34 @@ if ($resultText->num_rows > 0) {
     <script src="js/custom.js"></script>
 </body>
 </html>
+
+
+
+<?php
+ 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
+
+   
+    if (!empty($name) && !empty($email) && !empty($message)) {
+      
+        $sql = "INSERT INTO messages (name, email, subject, message) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $name, $email, $subject, $message);
+
+        if ($stmt->execute()) {
+            
+            echo "<script> document.location='index.php?notifications1=1';</script>";
+        } else {
+            echo "Error: " . $conn->error;
+        }
+    } else {
+        echo "Please fill in all required fields.";
+    }
+}
+?>

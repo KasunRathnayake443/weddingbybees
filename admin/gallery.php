@@ -14,8 +14,8 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding by Bees Carousel Management</title>
-    <link rel="stylesheet" href="../css/carousel.css">
+    <?php include '../inc/title.php'?>
+    <link rel="stylesheet" href="../css/dashboard.css">
     
 </head>
 <body>
@@ -122,20 +122,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 ?>
 
-<?php
-if (isset($_POST['update'])) {
-    $text1 = $_POST['text1'];
-    $text2 = $_POST['text2'];
-    $text3 = $_POST['text3'];
-
-   
-    $sql = "UPDATE carousel_text SET text1 = ?, text2 = ?, text3 = ? WHERE id = 1";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $text1, $text2, $text3);
-    $stmt->execute();
-
-    echo "<script> document.location='carousel.php?notifications3=1';</script>";
-    exit();
-}
-?>
 

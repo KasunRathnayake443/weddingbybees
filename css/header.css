@@ -1,11 +1,12 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: transparent;
   margin: 0;
   padding: 0;
   display: flex;
+  background-attachment: fixed;
+  border-color: transparent;
 }
-
 .dashboard-container {
   display: flex;
   width: 100%;
@@ -13,10 +14,21 @@ body {
 }
 
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 250px;
+  height: 100vh;
   background-color: #e6b0aa;
   padding: 20px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.content {
+  margin-left: 250px;
+  padding: 20px;
+  width: calc(100% - 250px);
 }
 
 .sidebar h2 {
@@ -52,7 +64,6 @@ body {
   flex-grow: 1;
   padding: 40px;
   background-color: #fff;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .main-content h1 {
