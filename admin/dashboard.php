@@ -55,6 +55,9 @@ if ($result && $result->num_rows > 0) {
         <label for="website_name">Website Name:</label>
         <input type="text" name="website_name" value="<?php echo htmlspecialchars($settings['website_name']); ?>" required>
 
+        <label for="auther_name">Website Auther Name:</label>
+        <input type="text" name="auther_name" value="<?php echo htmlspecialchars($settings['auther']); ?>" required>
+
         <label for="facebook_url">Facebook URL:</label>
         <input type="url" name="facebook_url" value="<?php echo htmlspecialchars($settings['facebook_url']); ?>">
 
@@ -114,6 +117,7 @@ if ($result && $result->num_rows > 0) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     $website_name = $_POST['website_name'];
+    $auther_name = $_POST['auther_name'];
     $facebook_url = $_POST['facebook_url'];
     $instagram_url = $_POST['instagram_url'];
     $phone = $_POST['phone'];
@@ -161,9 +165,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
    
-    $sql = "UPDATE general_settings SET website_name = ?, facebook_url = ?, instagram_url = ?, phone = ?, address = ?, logo = ?, about_us_text = ?, about_us_text_2 =? , about_us_image1 = ?, about_us_image2 = ? WHERE id = 1";
+    $sql = "UPDATE general_settings SET website_name = ?, facebook_url = ?, instagram_url = ?, phone = ?, address = ?, logo = ?, about_us_text = ?, about_us_text_2 =? , about_us_image1 = ?, about_us_image2 = ?, auther=? WHERE id = 1";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ssssssssss', $website_name, $facebook_url, $instagram_url, $phone, $address, $logo, $about_us_text,$about_us_text_2 ,$about_us_image1, $about_us_image2);
+    $stmt->bind_param('sssssssssss', $website_name, $facebook_url, $instagram_url, $phone, $address, $logo, $about_us_text,$about_us_text_2 ,$about_us_image1, $about_us_image2, $auther_name);
 
     if ($stmt->execute()) {
         echo "<script> document.location='dashboard.php?notifications1=1';</script>";

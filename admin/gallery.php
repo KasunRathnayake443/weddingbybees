@@ -7,6 +7,12 @@ include '../inc/links.php';
 
 $sql = "SELECT * FROM gallery";
 $result = $conn->query($sql);
+
+$sql2 = "SELECT * FROM general_settings WHERE id = 1";
+$result2 = $conn->query($sql2);
+$settings2= $result2->fetch_assoc();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +50,12 @@ $result = $conn->query($sql);
         </form>
 
 
+        <form action="gallery.php" method="post" enctype="multipart/form-data">
+        <label for="gallery_text">Gallery Text:</label>
+        <textarea name="gallery_text" value="" required> <?php echo htmlspecialchars($settings2['gallery_text']); ?></textarea>
+
+        <button name="update" type="submit">Update Text</button>
+        </form>
     </div>
 </div>
 
@@ -61,7 +73,11 @@ $result = $conn->query($sql);
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 </div>
               
-
+                <div class="success2" id="alertBox3">
+                    <i class="fa fa-check  fa-2x"></i> 
+                    <span class="message-text">Text Updated Successfully</span>                            
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                </div>
 
 
 
@@ -123,3 +139,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 
+
+<?php
+if (isset($_POST['update'])) {
+    $text1 = $_POST['gallery_text'];
+ 
+
+   
+    $sql = "UPDATE general_settings SET gallery_text = ? WHERE id = 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $text1);
+    $stmt->execute();
+
+    echo "<script> document.location='gallery.php?notifications3=1';</script>";
+    exit();
+}
+?>

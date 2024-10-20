@@ -24,6 +24,12 @@ $sql_general_settings = "SELECT * FROM general_settings WHERE id = 1";
 $result_general_settings = $conn->query($sql_general_settings);
 $general_settings = $result_general_settings->fetch_assoc();
 
+$package_images = "SELECT * FROM package_images";
+$result_package_images = $conn->query($package_images);
+
+$gallery_images = "SELECT * FROM gallery";
+$result_gallery_images = $conn->query($gallery_images);
+
 ?>
 
 
@@ -69,6 +75,7 @@ $general_settings = $result_general_settings->fetch_assoc();
 	<header class="top-header">
 		<nav class="navbar header-nav navbar-expand-lg">
             <div class="container">
+			
 				<a class="navbar-brand" href="index.php"><img src="images/logo/<?php echo $general_settings['logo']?>" height="60px" alt="image"></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-wd" aria-controls="navbar-wd" aria-expanded="false" aria-label="Toggle navigation">
 					<span></span>
@@ -79,10 +86,9 @@ $general_settings = $result_general_settings->fetch_assoc();
                     <ul class="navbar-nav">
                         <li><a class="nav-link active" href="#home">Home</a></li>
                         <li><a class="nav-link" href="#about">About Us</a></li>
-                        <li><a class="nav-link" href="#story">Story</a></li>
-                        <li><a class="nav-link" href="#family">Family</a></li>
+                        <li><a class="nav-link" href="#packages">Packages</a></li>
                         <li><a class="nav-link" href="#gallery">Gallery</a></li>
-                        <li><a class="nav-link" href="#events">Events</a></li>
+                        <li><a class="nav-link" href="#services">Services</a></li>
 						<li><a class="nav-link" href="#contact">Contact</a></li>
                     </ul>
                 </div>
@@ -166,243 +172,69 @@ $general_settings = $result_general_settings->fetch_assoc();
 	
 
 
-	<!-- <div id="story" class="story-box main-timeline-box">
+	
+
+	
+	<div id="packages" class="package-box">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="title-box">
-						<h2>Our Story</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-					</div>
-				</div>
-			</div>
-			<div class="row timeline-element separline">
-				<div class="timeline-date-panel col-xs-12 col-md-6  align-left">         
-                    <div class="time-line-date-content">
-                        <p class="mbr-timeline-date mbr-fonts-style display-font">
-                            1 March 2018  
-                        </p>
-                    </div>
-				</div>
-				<span class="iconBackground"></span>
-				<div class="col-xs-12 col-md-6 align-left">
-					<div class="timeline-text-content">
-						<h4 class="mbr-timeline-title pb-3 mbr-fonts-style display-font">First meet</h4>
-						<p class="mbr-timeline-text mbr-fonts-style display-7">
-						   We met at the wedding of our close friends and immediately found a common language, so a year later our first date happened.
-						</p>
-					 </div>
-				</div>
-			</div>
-			<div class="row timeline-element reverse separline">
-				<div class="timeline-date-panel col-xs-12 col-md-6  align-left">         
-                    <div class="time-line-date-content">
-                        <p class="mbr-timeline-date mbr-fonts-style display-font">
-                            2 April 2018  
-                        </p>
-                    </div>
-				</div>
-				<span class="iconBackground"></span>
-				<div class="col-xs-12 col-md-6 align-right">
-					<div class="timeline-text-content">
-						<h4 class="mbr-timeline-title pb-3 mbr-fonts-style display-font">First date</h4>
-						<p class="mbr-timeline-text mbr-fonts-style display-7">
-						   We met at the wedding of our close friends and immediately found a common language, so a year later our first date happened.
-						</p>
-					 </div>
-				</div>
-			</div>
-			<div class="row timeline-element separline">
-				<div class="timeline-date-panel col-xs-12 col-md-6  align-left">         
-                    <div class="time-line-date-content">
-                        <p class="mbr-timeline-date mbr-fonts-style display-font">
-                            1 May 2018  
-                        </p>
-                    </div>
-				</div>
-				<span class="iconBackground"></span>
-				<div class="col-xs-12 col-md-6 align-left">
-					<div class="timeline-text-content">
-						<h4 class="mbr-timeline-title pb-3 mbr-fonts-style display-font">Proposal</h4>
-						<p class="mbr-timeline-text mbr-fonts-style display-7">
-						   Fusce convallis ante id purus sagittis malesuada. Sed erat ipsum, suscipit sit amet auctor quis, vehicula ut leo. Maecenas felis nulla, tincidunt ac blandit a, consectetur quis elit.
-						</p>
-					 </div>
-				</div>
-			</div>
-			<div class="row timeline-element reverse separline">
-				<div class="timeline-date-panel col-xs-12 col-md-6  align-left">         
-                    <div class="time-line-date-content">
-                        <p class="mbr-timeline-date mbr-fonts-style display-font">
-                            2 June 2018  
-                        </p>
-                    </div>
-				</div>
-				<span class="iconBackground"></span>
-				<div class="col-xs-12 col-md-6 align-right">
-					<div class="timeline-text-content">
-						<h4 class="mbr-timeline-title pb-3 mbr-fonts-style display-font">Engagement</h4>
-						<p class="mbr-timeline-text mbr-fonts-style display-7">
-						   Proin tempus felis quis justo pretium interdum. Praesent sollicitudin lectus eu mattis egestas. Praesent luctus magna at dignissim placerat.
-						</p>
-					 </div>
-				</div>
-			</div>
-			
-		</div>
-	</div>
-	 -->
-	
-	
-	<div id="family" class="family-box">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="title-box">
-						<h2>Family</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+						<h2>Our Packages</h2>
+						<p><?php echo $general_settings['packages_text']?> </p>
 					</div>
 				</div>
 			</div>
 			<div class="row">
+			<?php foreach ($result_package_images as $key => $image) { ?>
 				<div class="col-lg-4 col-md-6 col-sm-12">
-					<div class="single-team-member">
-						<div class="family-img">
-							<img class="img-fluid" src="images/family-01.jpg" alt="" />
+					<div class="single-package">
+						<div class="package-img">
+							<img class="img-fluid" src="images/packages/<?php echo $image['image']; ?>" alt="Package Image" />
 						</div>
-						<div class="family-info">
-							<h4>Mr. Alonso Wiles </h4>
-							<p>{ Leida’s Father }</p>
+						<div class="package-info">
+							<h4><?php echo "Package " . ($key + 1); ?></h4> 
+							<a href="package-details.php?id=<?php echo $image['id']; ?>" class="btn btn-primary">See More</a> 
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-6 col-sm-12">
-					<div class="single-team-member">
-						<div class="family-img">
-							<img class="img-fluid" src="images/family-02.jpg" alt="" />
-						</div>
-						<div class="family-info">
-							<h4>Mr. Evon Wiles </h4>
-							<p>{ Leida’s Mother }</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-12">
-					<div class="single-team-member">
-						<div class="family-img">
-							<img class="img-fluid" src="images/family-03.jpg" alt="" />
-						</div>
-						<div class="family-info">
-							<h4>Mr. Chris Wiles </h4>
-							<p>{ Leida’s Brother }</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-12">
-					<div class="single-team-member">
-						<div class="family-img">
-							<img class="img-fluid" src="images/family-04.jpg" alt="" />
-						</div>
-						<div class="family-info">
-							<h4>Mr. Adina Wiles </h4>
-							<p>{ Leida’s Sister }</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-12">
-					<div class="single-team-member">
-						<div class="family-img">
-							<img class="img-fluid" src="images/family-05.jpg" alt="" />
-						</div>
-						<div class="family-info">
-							<h4>Mr. Annetta Wiles </h4>
-							<p>{ Leida’s Sister }</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-12">
-					<div class="single-team-member">
-						<div class="family-img">
-							<img class="img-fluid" src="images/family-06.jpg" alt="" />
-						</div>
-						<div class="family-info">
-							<h4>Mr. Ladonna Wiles </h4>
-							<p>{ Leida’s Sister }</p>
-						</div>
-					</div>
-				</div>
+			<?php } ?>
+
 			</div>
 		</div>
 	</div>
-	<!-- End Family -->
 	
-	<!-- Start Gallery -->
+	
+	
+	
 	<div id="gallery" class="gallery-box">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="title-box">
 						<h2>Gallery</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+						<p><?php echo $general_settings['gallery_text']?> </p>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<ul class="popup-gallery clearfix">
+				<?php foreach ($result_gallery_images as $key => $image) { ?>
 					<li>
-						<a href="images/gallery-01.jpg">
-							<img class="img-fluid" src="images/gallery-01.jpg" alt="single image">
+						<a href="images/gallery/<?php echo $image['image']; ?>">
+							<img class="img-fluid" src="images/gallery/<?php echo $image['image']; ?>" alt="single image">
 							<span class="overlay"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
 						</a>
 					</li>
-					<li>
-						<a href="images/gallery-02.jpg">
-							<img class="img-fluid" src="images/gallery-02.jpg" alt="single image">
-							<span class="overlay"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
-						</a>
-					</li>
-					<li>
-						<a href="images/gallery-03.jpg">
-							<img class="img-fluid" src="images/gallery-03.jpg" alt="single image">
-							<span class="overlay"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
-						</a>
-					</li>
-					<li>
-						<a href="images/gallery-04.jpg">
-							<img class="img-fluid" src="images/gallery-04.jpg" alt="single image">
-							<span class="overlay"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
-						</a>
-					</li>
-					<li>
-						<a href="images/gallery-05.jpg">
-							<img class="img-fluid" src="images/gallery-05.jpg" alt="single image">
-							<span class="overlay"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
-						</a>
-					</li>
-					<li>
-						<a href="images/gallery-06.jpg">
-							<img class="img-fluid" src="images/gallery-06.jpg" alt="single image">
-							<span class="overlay"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
-						</a>
-					</li>
-					<li>
-						<a href="images/gallery-07.jpg">
-							<img class="img-fluid" src="images/gallery-07.jpg" alt="single image">
-							<span class="overlay"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
-						</a>
-					</li>
-					<li>
-						<a href="images/gallery-08.jpg">
-							<img class="img-fluid" src="images/gallery-08.jpg" alt="single image">
-							<span class="overlay"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
-						</a>
-					</li>
+					<?php } ?>
 				</ul>
 			</div>
 		</div>
 	</div>
 
-	<div id="events" class="events-box">
+
+
+	<div id="services" class="events-box">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
@@ -448,57 +280,71 @@ $general_settings = $result_general_settings->fetch_assoc();
 	</div>
 	
 	<div id="contact" class="contact-box">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="title-box">
-						<h2>Contact wth us</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12 col-sm-12 col-xs-12">
-				  <div class="contact-block">
-				  <form id="contactForm" action="index.php" method="post">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<input type="text" class="form-control" id="name" name="name" placeholder="Name" required data-error="Please enter your name">
-									<div class="help-block with-errors"></div>
-								</div>                                 
-							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<input type="email" placeholder="Your Email" id="email" class="form-control" name="email" required data-error="Please enter your email">
-									<div class="help-block with-errors"></div>
-								</div> 
-							</div>
-							<div class="col-md-12">
-								<div class="form-group">
-									<input type="text" placeholder="Subject" id="subject" class="form-control" name="subject" required data-error="Please enter your subject">
-									<div class="help-block with-errors"></div>
-								</div> 
-							</div>
-							<div class="col-md-12">
-								<div class="form-group"> 
-									<textarea class="form-control" id="message" placeholder="Your Message" name="message" rows="8" data-error="Write your message" required></textarea>
-									<div class="help-block with-errors"></div>
-								</div>
-								<div class="submit-button text-center">
-								<button class="btn btn-common" id="submit" type="submit">Send Message</button>
-									<div id="msgSubmit" class="h3 text-center hidden"></div> 
-									<div class="clearfix"></div> 
-								</div>
-							</div>
-						</div>            
-					</form>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-box">
+                    <h2>Contact Us</h2>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="row">
+          
+            <div class="col-lg-6 col-sm-12 col-xs-12">
+                <div class="contact-block">
+                    <form id="contactForm" action="index.php" method="post">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" required data-error="Please enter your name">
+                                    <div class="help-block with-errors"></div>
+                                </div>                                 
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="email" placeholder="Your Email" id="email" class="form-control" name="email" required data-error="Please enter your email">
+                                    <div class="help-block with-errors"></div>
+                                </div> 
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Subject" id="subject" class="form-control" name="subject" required data-error="Please enter your subject">
+                                    <div class="help-block with-errors"></div>
+                                </div> 
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group"> 
+                                    <textarea class="form-control" id="message" placeholder="Your Message" name="message" rows="8" data-error="Write your message" required></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <div class="submit-button text-center">
+                                    <button class="btn btn-common" id="submit" type="submit">Send Message</button>
+                                    <div id="msgSubmit" class="h3 text-center hidden"></div> 
+                                    <div class="clearfix"></div> 
+                                </div>
+                            </div>
+                        </div>            
+                    </form>
+                </div>
+            </div>
+          
+            <div class="col-lg-6 col-sm-12 col-xs-12">
+                <div class="contact-info-box">
+                    <h3>Get in Touch</h3>
+                    <ul class="social-icons">
+                        <li><i class="fa fa-facebook"></i> Facebook: <a href="<?php echo $general_settings['facebook_url']?>">facebook.com/WeddingByBees</a></li>
+                        <li><i class="fa fa-instagram"></i> Instagram: <a href="<?php echo $general_settings['instagram_url']?>">instagram.com/WeddingByBees</a></li>
+                        <li><i class="fa fa-phone"></i> <?php echo $general_settings['phone']?></li>
+                        <li><i class="fa fa-map-marker"></i><?php echo $general_settings['address']?></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-				  </div>
-				</div>
-			</div>
-		</div>
-	</div>
+
 	
 	
 	
@@ -506,7 +352,7 @@ $general_settings = $result_general_settings->fetch_assoc();
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<p class="footer-company-name">All Rights Reserved. &copy; 2018 <a href="#">The Real Wedding</a> Design By : <a href="https://html.design/">html design</a></p>
+					<p class="footer-company-name">All Rights Reserved. &copy; 2024 <a href="#"><?php echo $general_settings['website_name']?></a> Design By : <a href="#"><?php echo $general_settings['auther']?></a></p>
 				</div>
 			</div>
 		</div>

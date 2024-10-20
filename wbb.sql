@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2024 at 08:15 PM
+-- Generation Time: Oct 20, 2024 at 07:43 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -117,15 +117,18 @@ CREATE TABLE `general_settings` (
   `about_us_text_2` text NOT NULL,
   `about_us_image1` varchar(255) DEFAULT NULL,
   `about_us_image2` varchar(255) DEFAULT NULL,
-  `packages_text` text NOT NULL
+  `packages_text` text NOT NULL,
+  `gallery_text` text NOT NULL,
+  `event_text` text NOT NULL,
+  `auther` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `general_settings`
 --
 
-INSERT INTO `general_settings` (`id`, `website_name`, `facebook_url`, `instagram_url`, `phone`, `address`, `logo`, `about_us_text`, `about_us_text_2`, `about_us_image1`, `about_us_image2`, `packages_text`) VALUES
-(1, 'Wedding By Bees', 'https://www.facebook.com/weddingbybees', 'https://www.facebook.com/weddingbybees', '0718948284', 'Temple Road Colomco', 'logo.png', 'At Wedding by Bees, we believe that every love story is unique and deserves to be celebrated with elegance and style. Founded on the principles of creativity, passion, and attention to detail, we specialize in transforming your wedding dreams into reality.\r\n\r\nOur team of dedicated professionals is committed to making your special day as memorable as possible, whether you\'re envisioning a grand celebration or an intimate gathering. From stunning floral arrangements to breathtaking venue decor, we take pride in curating personalized experiences that reflect your unique love story.\r\n\r\nWith years of experience in the wedding industry, we understand that every detail matters. That\'s why we offer a comprehensive range of services, including venue decoration, floral design, lighting, and event coordination, to ensure that your day runs smoothly from start to finish.\r\n\r\nLet Wedding by Bees take care of the details so you can focus on what matters most—celebrating love.', 'At Wedding by Bees, we take pride in creating unforgettable moments through exquisite decorations and thoughtful design. Every image in this gallery is a testament to our dedication to turning dreams into reality, capturing the essence of beauty and elegance in each event we undertake. Browse through our collection to get inspired by our past projects, and see how we can bring your vision to life.', 'gallery-04.jpg', 'gallery-06.jpg', '   The most important day of your life can also be the most daunting. This is why at Wedding by Bees we have created packages of outstanding value. You decide when and where and we do the rest.');
+INSERT INTO `general_settings` (`id`, `website_name`, `facebook_url`, `instagram_url`, `phone`, `address`, `logo`, `about_us_text`, `about_us_text_2`, `about_us_image1`, `about_us_image2`, `packages_text`, `gallery_text`, `event_text`, `auther`) VALUES
+(1, 'Wedding By bees', 'https://www.facebook.com/weddingbybees', 'https://www.instagram.com/weddingbybees?igsh=Y3Q2czJmbnYzd3B2', '076 857 3000', ' 518 jana jaya city mall, Rajagiriya', 'logo.png', 'At Wedding by Bees, we believe that every love story is unique and deserves to be celebrated with elegance and style. Founded on the principles of creativity, passion, and attention to detail, we specialize in transforming your wedding dreams into reality.\r\n\r\nOur team of dedicated professionals is committed to making your special day as memorable as possible, whether you\'re envisioning a grand celebration or an intimate gathering. From stunning floral arrangements to breathtaking venue decor, we take pride in curating personalized experiences that reflect your unique love story.\r\n\r\nWith years of experience in the wedding industry, we understand that every detail matters. That\'s why we offer a comprehensive range of services, including venue decoration, floral design, lighting, and event coordination, to ensure that your day runs smoothly from start to finish.\r\n\r\nLet Wedding by Bees take care of the details so you can focus on what matters most—celebrating love.', 'At Wedding by Bees, we take pride in creating unforgettable moments through exquisite decorations and thoughtful design. Every image in this gallery is a testament to our dedication to turning dreams into reality, capturing the essence of beauty and elegance in each event we undertake. Browse through our collection to get inspired by our past projects, and see how we can bring your vision to life.', 'gallery-04.jpg', 'gallery-06.jpg', '   The most important day of your life can also be the most daunting. This is why at Wedding by Bees we have created packages of outstanding value. You decide when and where and we do the rest.', ' Explore our gallery and get inspired by the beautiful moments we\'ve crafted for countless celebrations. From elegant floral arrangements to stunning decor setups, each image tells a story of joy, love, and creativity. Whether you\'re planning an intimate wedding or a grand event, our gallery showcases the passion and dedication we put into every detail.', '', 'Kavishan Anjana');
 
 -- --------------------------------------------------------
 
@@ -149,7 +152,9 @@ CREATE TABLE `messages` (
 INSERT INTO `messages` (`id`, `name`, `email`, `subject`, `message`, `created_at`) VALUES
 (1, 'Kasun Rathnayake', 'madkasunmax@gmail.com', 'ddd', 'ddd', '2024-10-19 15:11:50'),
 (2, 'Kasun Rathnayake', 'madkasunmax@gmail.com', 'ddd', 'ddddd', '2024-10-19 15:12:03'),
-(3, 'Kasun Rathnayake', 'madkasunmax@gmail.com', 'ddd', 'ddddd', '2024-10-19 15:13:30');
+(3, 'Kasun Rathnayake', 'madkasunmax@gmail.com', 'ddd', 'ddddd', '2024-10-19 15:13:30'),
+(4, 'Kasun Rathnayake', 'madkasunmax@gmail.com', 'test', 'dscdvdv', '2024-10-20 14:59:51'),
+(5, 'Kasun Rathnayake', 'madkasunmax@gmail.com', 'kavi', 'test 12344', '2024-10-20 16:00:10');
 
 -- --------------------------------------------------------
 
@@ -282,7 +287,7 @@ ALTER TABLE `general_settings`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `package_images`
