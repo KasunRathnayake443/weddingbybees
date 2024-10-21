@@ -10,6 +10,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <li><a href="gallery.php" class="<?php echo ($current_page == 'gallery.php') ? 'active' : ''; ?>">Gallery</a></li>
                     <li><a href="messages.php" class="<?php echo ($current_page == 'messages.php') ? 'active' : ''; ?>">Messages</a></li>
                     <li><a href="packages.php" class="<?php echo ($current_page == 'packages.php') ? 'active' : ''; ?>">Packages</a></li>
+                    <li><a href="services.php" class="<?php echo ($current_page == 'services.php') ? 'active' : ''; ?>">Services</a></li>
                     <li><a href="logout.php" onclick="return confirmLogout();" class="">Logout</a></li>
                 </ul>
                 <img src="../images/bees.png" width="250px"> 

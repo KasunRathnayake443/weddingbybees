@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2024 at 07:43 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Oct 21, 2024 at 09:39 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -180,6 +180,36 @@ INSERT INTO `package_images` (`id`, `image`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `services`
+--
+
+CREATE TABLE `services` (
+  `id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`id`, `image`, `name`, `description`) VALUES
+(1, '12.webp', 'Bouquets', 'The main bouquet carried by the bride. Smaller bouquets for the bridesmaids.'),
+(2, '5.jpg', 'Boutonnieres', 'Floral arrangements worn by the groom, groomsmen, and other male members of the wedding party.'),
+(7, '9.jpg', 'Centerpieces', 'Floral arrangements placed in the center of each dining table at the reception.'),
+(8, '7.jpg', 'Floral Installations', 'Larger floral displays, such as flower walls, hanging installations, or floral chandeliers, to create a visually stunning atmosphere.'),
+(9, '3.jpg', 'Reception Decor', 'Additional floral arrangements or greenery throughout the reception venue, including entrance decor, escort card table arrangements, and lounge area arrangements.'),
+(10, '11.jpg', 'Floral Decor for Cake', 'Coordinating flowers to complement the wedding cake or dessert table.'),
+(12, '6.jpg', 'Petals and Aisle Runners', 'Sprinkling petals down the aisle or using floral aisle runners for added elegance.'),
+(13, '4.jpg', 'Consultation and Design', 'Collaborating with the couple to understand their vision, theme, and color scheme, and providing professional advice on floral choices.'),
+(14, '8.jpg', 'Delivery and Set-Up', 'Transporting the floral arrangements to the venue and setting them up according to the agreed-upon design.'),
+(15, '1.jpg', 'Customization', 'Creating custom floral designs to match the couple’s unique style and preferences.'),
+(16, '10.jpg', 'Seasonal Considerations', 'Taking into account the seasonality of flowers and suggesting options that are readily available and in line with the wedding date.');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -244,6 +274,12 @@ ALTER TABLE `package_images`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -294,6 +330,12 @@ ALTER TABLE `messages`
 --
 ALTER TABLE `package_images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `services`
+--
+ALTER TABLE `services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`

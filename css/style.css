@@ -651,7 +651,7 @@ button:focus {
 }
 
 /*------------------------------------------------------------------
-    Events
+    
 -------------------------------------------------------------------*/
 
 .events-box {
@@ -661,6 +661,7 @@ button:focus {
   margin-bottom: 30px;
   border: 10px solid #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
 }
 .event-img {
   margin-bottom: 15px;
@@ -677,6 +678,8 @@ button:focus {
 .event-inner a:hover {
   background: #63c7bd;
 }
+
+
 
 /*------------------------------------------------------------------
     Contact

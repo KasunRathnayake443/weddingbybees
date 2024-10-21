@@ -30,6 +30,8 @@ $result_package_images = $conn->query($package_images);
 $gallery_images = "SELECT * FROM gallery";
 $result_gallery_images = $conn->query($gallery_images);
 
+$sql = "SELECT * FROM services";
+$result = $conn->query($sql);
 ?>
 
 
@@ -239,42 +241,26 @@ $result_gallery_images = $conn->query($gallery_images);
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="title-box">
-						<h2>Events</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+						<h2>Services</h2>
+						<p>"Your wedding day is one of the most important days of your life, and we are honored to be a part of it. Our team at <?php echo $general_settings['website_name']?> is passionate about bringing your vision to life. Browse through our services to find the perfect elements that will make your celebration uniquely yours, from stunning decorations to exquisite catering." </p>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-4 col-md-6 col-sm-12">
-					<div class="event-inner">
-						<div class="event-img">
-							<img class="img-fluid" src="images/event-img-01.jpg" alt="" />
+			<div class="row" >
+			<?php while($row = $result->fetch_assoc()) { ?>
+					<div class="col-lg-4 col-md-6 col-sm-12" >
+						<div class="event-inner">
+							<div class="event-img">
+								<img class="img-fluid" src="images/services/<?php echo $row['image']; ?>" alt="<?php echo htmlspecialchars($row['name']); ?>" />
+							</div>
+							<h2><?php echo htmlspecialchars($row['name']); ?></h2>
+							<p><?php echo htmlspecialchars($row['description']); ?></p>
+						
 						</div>
-						<h2>2 June 2018 Engagement</h2>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard </p>
-						<a href="#">See location ></a>
 					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-12">
-					<div class="event-inner">
-						<div class="event-img">
-							<img class="img-fluid" src="images/event-img-02.jpg" alt="" />
-						</div>
-						<h2>3 June 2018 Main Ceremony </h2>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard </p>
-						<a href="#">See location ></a>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-12">
-					<div class="event-inner">
-						<div class="event-img">
-							<img class="img-fluid" src="images/event-img-03.jpg" alt="" />
-						</div>
-						<h2>4 June 2018 Wedding party </h2>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard </p>
-						<a href="#">See location ></a>
-					</div>
-				</div>
+				<?php } ?>
+			</div>
 			</div>
 		</div>
 	</div>
