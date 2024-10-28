@@ -651,7 +651,7 @@ button:focus {
 }
 
 /*------------------------------------------------------------------
-    
+    services
 -------------------------------------------------------------------*/
 
 .events-box {
@@ -661,10 +661,15 @@ button:focus {
   margin-bottom: 30px;
   border: 10px solid #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
+  overflow: hidden;
 }
 .event-img {
   margin-bottom: 15px;
+}
+.event-img:hover {
+  size: 120%;
+  scale: 1.1;
+  transition: 0.5s;
 }
 
 .event-inner a {
@@ -678,8 +683,6 @@ button:focus {
 .event-inner a:hover {
   background: #63c7bd;
 }
-
-
 
 /*------------------------------------------------------------------
     Contact
@@ -763,18 +766,17 @@ button:focus {
 
 @media (max-width: 768px) {
   .contact-info-box {
-      margin-top: 40px;
+    margin-top: 40px;
   }
 
   .contact-info-box h3 {
-      font-size: 24px;
+    font-size: 24px;
   }
 
   .contact-info-box ul li {
-      font-size: 18px;
+    font-size: 18px;
   }
 }
-
 
 .submit-button .btn-common {
   background-color: #63c7bd;

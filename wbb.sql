@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2024 at 09:39 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Oct 28, 2024 at 05:19 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,9 +37,10 @@ CREATE TABLE `carousel` (
 --
 
 INSERT INTO `carousel` (`id`, `image`) VALUES
-(22, '67134a6431fed3.46366374.jpg'),
-(24, '67134a80713539.49767866.jpg'),
-(25, '67134a848dad49.20480881.jpg');
+(28, '671fb608cd8348.52006254.jpg'),
+(29, '671fb60d112569.76558522.jpg'),
+(30, '671fb611b69c72.98155275.jpg'),
+(31, '671fb623296653.65172157.jpg');
 
 -- --------------------------------------------------------
 
@@ -128,7 +129,7 @@ CREATE TABLE `general_settings` (
 --
 
 INSERT INTO `general_settings` (`id`, `website_name`, `facebook_url`, `instagram_url`, `phone`, `address`, `logo`, `about_us_text`, `about_us_text_2`, `about_us_image1`, `about_us_image2`, `packages_text`, `gallery_text`, `event_text`, `auther`) VALUES
-(1, 'Wedding By bees', 'https://www.facebook.com/weddingbybees', 'https://www.instagram.com/weddingbybees?igsh=Y3Q2czJmbnYzd3B2', '076 857 3000', ' 518 jana jaya city mall, Rajagiriya', 'logo.png', 'At Wedding by Bees, we believe that every love story is unique and deserves to be celebrated with elegance and style. Founded on the principles of creativity, passion, and attention to detail, we specialize in transforming your wedding dreams into reality.\r\n\r\nOur team of dedicated professionals is committed to making your special day as memorable as possible, whether you\'re envisioning a grand celebration or an intimate gathering. From stunning floral arrangements to breathtaking venue decor, we take pride in curating personalized experiences that reflect your unique love story.\r\n\r\nWith years of experience in the wedding industry, we understand that every detail matters. That\'s why we offer a comprehensive range of services, including venue decoration, floral design, lighting, and event coordination, to ensure that your day runs smoothly from start to finish.\r\n\r\nLet Wedding by Bees take care of the details so you can focus on what matters most—celebrating love.', 'At Wedding by Bees, we take pride in creating unforgettable moments through exquisite decorations and thoughtful design. Every image in this gallery is a testament to our dedication to turning dreams into reality, capturing the essence of beauty and elegance in each event we undertake. Browse through our collection to get inspired by our past projects, and see how we can bring your vision to life.', 'gallery-04.jpg', 'gallery-06.jpg', '   The most important day of your life can also be the most daunting. This is why at Wedding by Bees we have created packages of outstanding value. You decide when and where and we do the rest.', ' Explore our gallery and get inspired by the beautiful moments we\'ve crafted for countless celebrations. From elegant floral arrangements to stunning decor setups, each image tells a story of joy, love, and creativity. Whether you\'re planning an intimate wedding or a grand event, our gallery showcases the passion and dedication we put into every detail.', '', 'Kavishan Anjana');
+(1, 'Wedding By bees', 'https://www.facebook.com/weddingbybees', 'https://www.instagram.com/weddingbybees?igsh=Y3Q2czJmbnYzd3B2', '076 857 3000', ' 518 jana jaya city mall, Rajagiriya', 'logo.png', 'At Wedding by Bees, we believe that every love story is unique and deserves to be celebrated with elegance and style. Founded on the principles of creativity, passion, and attention to detail, we specialize in transforming your wedding dreams into reality.\r\n\r\nOur team of dedicated professionals is committed to making your special day as memorable as possible, whether you\'re envisioning a grand celebration or an intimate gathering. From stunning floral arrangements to breathtaking venue decor, we take pride in curating personalized experiences that reflect your unique love story.\r\n\r\nWith years of experience in the wedding industry, we understand that every detail matters. That\'s why we offer a comprehensive range of services, including venue decoration, floral design, lighting, and event coordination, to ensure that your day runs smoothly from start to finish.\r\n\r\nLet Wedding by Bees take care of the details so you can focus on what matters most—celebrating love.', 'At Wedding by Bees, we take pride in creating unforgettable moments through exquisite decorations and thoughtful design. Every image in this gallery is a testament to our dedication to turning dreams into reality, capturing the essence of beauty and elegance in each event we undertake. Browse through our collection to get inspired by our past projects, and see how we can bring your vision to life.', '241360648_225646269417874_8241028221639879764_n.png', 'gallery-06.jpg', '   The most important day of your life can also be the most daunting. This is why at Wedding by Bees we have created packages of outstanding value. You decide when and where and we do the rest.', ' Explore our gallery and get inspired by the beautiful moments we\'ve crafted for countless celebrations. From elegant floral arrangements to stunning decor setups, each image tells a story of joy, love, and creativity. Whether you\'re planning an intimate wedding or a grand event, our gallery showcases the passion and dedication we put into every detail.', '', 'Kavishan Anjana');
 
 -- --------------------------------------------------------
 
@@ -293,7 +294,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `carousel`
 --
 ALTER TABLE `carousel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `carousel-text`

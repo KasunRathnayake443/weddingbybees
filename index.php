@@ -63,7 +63,8 @@ $result = $conn->query($sql);
    
 
 </head>
-<body  id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98" >
+<body id="home" data-spy="scroll" data-target="#navbar-wd" data-offset="98" style="background-image: url('images/background/.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+
 
 	
     <div id="preloader">

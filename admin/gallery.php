@@ -79,6 +79,8 @@ $settings2= $result2->fetch_assoc();
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 </div>
 
+               
+
 
 
 <script src="../js/notifications.js"></script>

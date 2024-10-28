@@ -94,6 +94,11 @@ if (!$texts) {
                     <span class="message-text">Text Updated Successfully</span>                            
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 </div>
+                <div class="alert2" id="alertBox4">
+                    <i class=" fa fa-info-circle  fa-2x"></i> 
+                    <span class="message-text">Invalid File Type</span>                            
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                </div>
 
 
 
@@ -130,7 +135,8 @@ if (isset($_FILES['new_image']) && $_FILES['new_image']['error'] === 0) {
             echo "Error uploading the image.";
         }
     } else {
-        echo "Invalid file type. Only JPG, JPEG, PNG, and GIF files are allowed.";
+        echo "<script> document.location='carousel.php?notifications4=1';</script>";
+       
     }
 } 
 ?>
