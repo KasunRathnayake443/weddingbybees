@@ -12,9 +12,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <li><a href="bookings.php" class="<?php echo ($current_page == 'bookings.php') ? 'active' : ''; ?>">Bookings</a></li>
                     <li><a href="packages.php" class="<?php echo ($current_page == 'packages.php') ? 'active' : ''; ?>">Packages</a></li>
                     <li><a href="services.php" class="<?php echo ($current_page == 'services.php') ? 'active' : ''; ?>">Services</a></li>
+                    <li><a href="admins.php" class="<?php echo ($current_page == 'admins.php') ? 'active' : ''; ?>">admins</a></li>
                     <li><a href="logout.php" onclick="return confirmLogout();" class="">Logout</a></li>
                 </ul>
-                <img src="../images/bees.png" width="250px"> 
+                
             </nav>
         </div>
     

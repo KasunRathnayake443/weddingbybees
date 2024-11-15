@@ -223,7 +223,7 @@ h1, h2 {
 	<div class="container">
     <h1>Package Details</h1>
 
-    <div class="package-details">
+    <div  id="packages" class="package-details">
         <img src="images/packages/<?php echo htmlspecialchars($package['image']); ?>" alt="Package Image" class="package-image">
         <h2><?php echo htmlspecialchars($package['title']); ?></h2>
         <p><?php echo nl2br(htmlspecialchars($package['description'])); ?></p>
