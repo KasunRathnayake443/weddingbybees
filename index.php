@@ -196,7 +196,7 @@ $result = $conn->query($sql);
 							<img class="img-fluid" src="images/packages/<?php echo $image['image']; ?>" alt="Package Image" />
 						</div>
 						<div class="package-info">
-							<h4><?php echo "Package " . ($key + 1); ?></h4> 
+							<h4><?php echo $image['title']; ?></h4> 
 							<a href="package-details.php?id=<?php echo $image['id']; ?>" class="btn btn-primary">See More</a> 
 						</div>
 					</div>
@@ -348,6 +348,12 @@ $result = $conn->query($sql);
 				<div class="success2" id="alertBox1">
                     <i class="fa fa-check  fa-2x"></i> 
                     <span class="message-text">Message sent successfully</span>                            
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                </div>
+
+				<div class="success2" id="alertBox2">
+                    <i class="fa fa-check  fa-2x"></i> 
+                    <span class="message-text">Booking Successfull. Our team will contact you for further clarifications</span>                            
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 </div>
 
