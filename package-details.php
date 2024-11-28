@@ -66,21 +66,80 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     margin: 0 auto;
     text-align: center;
 }
+.package-container {
+    background-color: #f5f5f5;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    margin-bottom: 76px;
+}
 
-.package-details {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    max-width: 600px;
-    margin: 20px auto;
+.image-section {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .package-image {
     max-width: 100%;
-    height: auto;
-    border-radius: 10px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
+
+.details-section {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.package-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.package-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.package-price {
+    font-size: 1.5rem;
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.buttons .btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+    margin-right: 10px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    transition: transform 0.2s ease-in-out, background-color 0.3s;
+}
+
+.buttons .btn:hover {
+    transform: scale(1.1);
+    background-color: #0056b3;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .details-section {
+        text-align: center;
+    }
+
+    .buttons .btn {
+        display: block;
+        margin: 10px auto;
+    }
+}
+
 
 h1, h2 {
     color: #333;
@@ -219,20 +278,27 @@ h1, h2 {
 
 
 
-	
-	<div class="container">
-    <h1>Package Details</h1>
-
-    <div  id="packages" class="package-details">
-        <img src="images/packages/<?php echo htmlspecialchars($package['image']); ?>" alt="Package Image" class="package-image">
-        <h2><?php echo htmlspecialchars($package['title']); ?></h2>
-        <p><?php echo nl2br(htmlspecialchars($package['description'])); ?></p>
-        <p><strong>Price:</strong> Rs. <?php echo htmlspecialchars($package['price']); ?></p>
-
-        <a href="#" class="btn" id="bookNowBtn">Book Now</a>
-        <a href="index.php" class="btn btn-secondary">Back to Home Page</a>
+    <div class="container package-container">
+    <div class="row">
+      
+        <div class="col-md-6 image-section">
+            <img src="images/packages/<?php echo htmlspecialchars($package['image']); ?>" 
+                 alt="Package Image" class="package-image">
+        </div>
+  
+        <div class="col-md-6 details-section">
+            <h1 class="package-title"><?php echo htmlspecialchars($package['title']); ?></h1>
+            <p class="package-description"><?php echo nl2br(htmlspecialchars($package['description'])); ?></p>
+            <p class="package-price">Price: <strong>Rs. <?php echo htmlspecialchars($package['price']); ?></strong></p>
+            <div class="buttons">
+                <a href="#" class="btn btn-primary" id="bookNowBtn">Book Now</a>
+                <a href="index.php" class="btn btn-secondary">Back to Home Page</a>
+            </div>
+        </div>
     </div>
 </div>
+
+
 
 <!-- Booking Modal -->
 <div id="bookingModal" class="modal">

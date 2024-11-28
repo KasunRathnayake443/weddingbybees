@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2024 at 05:19 PM
+-- Generation Time: Nov 28, 2024 at 04:12 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,34 @@ SET time_zone = "+00:00";
 --
 -- Database: `wbb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `id` int(11) NOT NULL,
+  `customer_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `wedding_date` date NOT NULL,
+  `venue` varchar(255) NOT NULL,
+  `package_name` varchar(255) NOT NULL,
+  `package_price` decimal(10,2) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `customer_name`, `email`, `wedding_date`, `venue`, `package_name`, `package_price`, `created_at`) VALUES
+(1, 'abc', 'madkasunmax@gmail.com', '2024-12-06', 'Hotel', 'Budget Bliss Package', 65000.00, '2024-11-15 07:45:49'),
+(2, 'abc', 'madkasunmax@gmail.com', '2024-11-23', 'Hotel', 'Budget Bliss Package', 65000.00, '2024-11-15 07:48:34'),
+(3, 'abc', 'madkasunmax@gmail.com', '2024-11-28', 'Hotel', 'Budget Bliss Package', 65000.00, '2024-11-15 07:49:08'),
+(4, 'abc', 'madkasunmax@gmail.com', '2024-11-21', 'Hotel', 'Budget Bliss Package', 65000.00, '2024-11-15 07:49:39'),
+(5, 'abc', 'abc@gmail.com', '2024-11-23', 'Grand Hotel', 'Luxe Dream Package', 125000.00, '2024-11-15 07:56:14');
 
 -- --------------------------------------------------------
 
@@ -165,18 +193,21 @@ INSERT INTO `messages` (`id`, `name`, `email`, `subject`, `message`, `created_at
 
 CREATE TABLE `package_images` (
   `id` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL
+  `image` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `title` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `package_images`
 --
 
-INSERT INTO `package_images` (`id`, `image`) VALUES
-(4, '6713f2d79a8df4.47008372.png'),
-(5, '6713f2e2387e03.76386741.jpg'),
-(6, '6713f2e5859711.18219212.jpg'),
-(8, '6713f2f150cac9.66524457.jpg');
+INSERT INTO `package_images` (`id`, `image`, `description`, `price`, `title`) VALUES
+(4, '6713f2d79a8df4.47008372.png', '\"Celebrate beautifully without stretching your budget. The Budget Bliss Package is designed to add a charming touch to your special day with simple yet elegant decor.\"', 65000.00, 'Budget Bliss Package'),
+(5, '6713f2e2387e03.76386741.jpg', '\"Create timeless memories with the Classic Elegance Package. This package blends sophistication with affordability, giving your event a warm, memorable ambiance.\"', 85000.00, 'Classic Elegance Package.'),
+(6, '6713f2e5859711.18219212.jpg', '\"Set the stage for romance with the Premium Romance Package. With stylish decor and tasteful lighting, this package creates a dreamy, elegant atmosphere for any occasion.\"', 100000.00, 'Premium Romance Package'),
+(8, '6713f2f150cac9.66524457.jpg', '\"Turn your vision into reality with the Luxe Dream Package. For those seeking a grand experience, this package offers everything to make your day extraordinarily luxurious and memorable.\"', 125000.00, 'Luxe Dream Package');
 
 -- --------------------------------------------------------
 
@@ -226,11 +257,18 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
-(1, 'test', 'test@gmail.com', '123');
+(1, 'testss', 'test@gmail.com', '123'),
+(4, 'Somapala', 'madkasunmax@gmail.comsasa', '$2y$10$5enoucOMe7EsVWvRqyiIIunonV/5sYN27KiWVXTdMiZHosZWfFTE6');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `carousel`
@@ -291,6 +329,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `bookings`
+--
+ALTER TABLE `bookings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `carousel`
 --
 ALTER TABLE `carousel`
@@ -330,7 +374,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `package_images`
 --
 ALTER TABLE `package_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -342,7 +386,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
