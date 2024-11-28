@@ -339,6 +339,20 @@ button:focus {
   background: #dd666c;
 }
 
+.top-header .navbar .navbar-collapse ul li a.shop-link {
+  background: #ffc107;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px;
+  padding: 19px 15px;
+}
+
+.top-header .navbar .navbar-collapse ul li a.shop-link:hover {
+  background: #ff9800;
+  color: #ffffff;
+}
+
 /*------------------------------------------------------------------
     Banner
 -------------------------------------------------------------------*/

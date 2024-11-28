@@ -59,6 +59,7 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/custom.css">
 	<link rel="stylesheet" href="css/alerts.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
    
 
@@ -76,28 +77,31 @@ $result = $conn->query($sql);
 	
 	
 	<header class="top-header">
-		<nav class="navbar header-nav navbar-expand-lg">
-            <div class="container">
-			
-				<a class="navbar-brand" href="index.php"><img src="images/logo/<?php echo $general_settings['logo']?>" height="60px" alt="image"></a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-wd" aria-controls="navbar-wd" aria-expanded="false" aria-label="Toggle navigation">
-					<span></span>
-					<span></span>
-					<span></span>
-				</button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbar-wd">
-                    <ul class="navbar-nav">
-                        <li><a class="nav-link active" href="#home">Home</a></li>
-                        <li><a class="nav-link" href="#about">About Us</a></li>
-                        <li><a class="nav-link" href="#packages">Packages</a></li>
-                        <li><a class="nav-link" href="#gallery">Gallery</a></li>
-                        <li><a class="nav-link" href="#services">Services</a></li>
-						<li><a class="nav-link" href="#contact">Contact</a></li>
-                    </ul>
-                </div>
+    <nav class="navbar header-nav navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">
+                <img src="images/logo/<?php echo $general_settings['logo']?>" height="60px" alt="image">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-wd" aria-controls="navbar-wd" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbar-wd">
+                <ul class="navbar-nav">
+                    <li><a class="nav-link active" href="#home">Home</a></li>
+                    <li><a class="nav-link" href="#about">About Us</a></li>
+                    <li><a class="nav-link" href="#packages">Packages</a></li>
+                    <li><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li><a class="nav-link" href="#services">Services</a></li>
+                    <li><a class="nav-link" href="#contact">Contact</a></li>
+                    <li><a class="nav-link shop-link" href="#shop"><i class="fas fa-shopping-cart"></i> Shop</a></li>
+                </ul>
             </div>
-        </nav>
-	</header>
+        </div>
+    </nav>
+</header>
+
 
 
 
