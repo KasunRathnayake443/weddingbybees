@@ -1,5 +1,4 @@
 .dashboard-container {
-  margin-left: 250px;
   padding: 20px;
   width: calc(100% - 250px);
 }
@@ -165,7 +164,8 @@ td {
   border-radius: 5px;
 }
 
-button.edit-btn, button.delete-btn {
+button.edit-btn,
+button.delete-btn {
   padding: 8px 12px;
   margin: 5px;
   border: none;
@@ -181,9 +181,6 @@ button.edit-btn {
 button.delete-btn {
   background-color: #e74c3c;
 }
-
-
-
 
 .modal {
   display: none;
@@ -212,8 +209,139 @@ button.delete-btn {
   font-weight: bold;
 }
 
-.close:hover, .close:focus {
+.close:hover,
+.close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+/* General Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-container {
+  padding: 20px;
+  width: calc(100% - 250px);
+}
+
+.main-content {
+  padding-top: 20px;
+}
+
+/* Responsive Adjustments for Mobile View */
+@media (max-width: 768px) {
+  .dashboard-container {
+    margin-left: 0;
+    width: 100%;
+    padding: 15px;
+  }
+
+  .general-settings {
+    padding: 15px;
+  }
+
+  .general-settings img {
+    width: 80px; /* Adjust for smaller view */
+  }
+
+  /* Adjust the form */
+  .general-settings input[type="text"],
+  .general-settings input[type="url"],
+  .general-settings textarea,
+  .general-settings input[type="file"] {
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .general-settings button {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .carousel-wrapper {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .carousel-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .carousel-image img {
+    border-radius: 5px;
+  }
+
+  .delete {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .message-section {
+    margin-top: 10px;
+  }
+
+  table th,
+  table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  /* Dropdown header adjustments */
+  header {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .header-dropdown {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px; /* Adjust based on header height */
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    border-radius: 8px;
+  }
+
+  .header-dropdown a {
+    text-decoration: none;
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    display: block;
+  }
+
+  .header-dropdown a:last-child {
+    border-bottom: none;
+  }
+
+  .header-dropdown a:hover {
+    background-color: #f9f9f9;
+  }
+
+  .header-toggle {
+    display: block;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 15px;
+  }
+
+  /* Show dropdown menu when active */
+  .header-dropdown.active {
+    display: flex;
+  }
 }

@@ -1,0 +1,174 @@
+/* General Navbar Styles */
+#nav-bar {
+  background-color: white;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#nav-bar .navbar {
+  padding: 0;
+}
+
+#nav-bar .navbar-brand {
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #dd666c;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#nav-bar .navbar-nav {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+#nav-bar .nav-item {
+  margin-left: 20px;
+}
+
+#nav-bar .nav-link {
+  font-size: 1rem;
+  color: #555;
+  transition: color 0.3s;
+}
+
+#nav-bar .nav-link:hover {
+  color: #dd666c;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+/* Buttons */
+.btn-outline-dark {
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 2px solid #dd666c;
+  background-color: transparent;
+  color: #dd666c;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.btn-outline-dark:hover {
+  background-color: #dd666c;
+  color: white;
+}
+
+/* Login and Register Buttons */
+.btn-login,
+.btn-register {
+  background-color: #ffc107;
+  color: #fff;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.btn-login:hover,
+.btn-register:hover {
+  background-color: #63c7bd;
+}
+
+@media (max-width: 992px) {
+  #nav-bar .navbar-nav {
+    justify-content: space-between; /* Add space between items */
+    margin-top: 10px;
+  }
+
+  #nav-bar .navbar-brand {
+    font-size: 1.8rem;
+    position: static;
+    transform: none;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .profile-pic {
+    width: 35px;
+    height: 35px;
+  }
+
+ 
+  .btn-login,
+  .btn-register {
+    width: 45%; 
+    margin: 0 5%;
+  }
+}
+
+@media (max-width: 576px) {
+  #nav-bar {
+    padding: 10px;
+  }
+
+  #nav-bar .navbar-brand {
+    font-size: 1.6rem;
+    margin-right: 0;
+  }
+
+  #nav-bar .navbar-nav {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #nav-bar .nav-item {
+    margin: 10px 0;
+  }
+
+  .profile-pic {
+    width: 30px;
+    height: 30px;
+  }
+
+  .btn-login,
+  .btn-register {
+    margin-top: 15px;
+    width: 100%; 
+    margin-left: 0;
+  }
+}
+
+/* Custom Hamburger Toggle */
+.navbar-toggler-icon {
+  width: 30px;
+  height: 3px;
+  background-color: #333;
+  border: none;
+  position: relative;
+  
+}
+
+
+
+.navbar-toggler-icon::before {
+  top: -8px;
+}
+
+.navbar-toggler-icon::after {
+  top: 8px;
+}
+
+.navbar-toggler.collapsed .navbar-toggler-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.navbar-toggler.collapsed .navbar-toggler-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+.navbar-toggler.collapsed .navbar-toggler-icon {
+  background-color: transparent;
+}

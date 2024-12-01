@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2024 at 04:12 PM
+-- Generation Time: Dec 01, 2024 at 05:39 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -102,6 +102,51 @@ CREATE TABLE `carousel_text` (
 
 INSERT INTO `carousel_text` (`id`, `text1`, `text2`, `text3`) VALUES
 (1, 'Wedding By Bees', 'Your wedding is a movie, and we\'ll take you Beyond the Script.', 'Let the Journey of Forever Begin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `description`, `created_at`) VALUES
+(1, 'Flowers Bouquet', 'Various types of flowers bouquets', '2024-11-30 09:31:13'),
+(2, 'Cake', 'Various Cake', '2024-11-30 10:52:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `address` text NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `profile_pic` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`id`, `name`, `email`, `phone`, `address`, `password`, `profile_pic`, `created_at`) VALUES
+(2, 'Kasun Rathnayake', 'madkasunmax@gmail.com', '0718948284', '550/36 A', '$2y$10$X5ytg8ybyepbDXxxDZxg0eaCSbMZdpOZgxLxxr05hW/7XgBXsFXOm', 'png-clipart-computer-icons-font-awesome-user-font-awesome-miscellaneous-rectangle-thumbnail.png', '2024-11-30 16:46:38');
 
 -- --------------------------------------------------------
 
@@ -212,6 +257,29 @@ INSERT INTO `package_images` (`id`, `image`, `description`, `price`, `title`) VA
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `image_url` varchar(255) NOT NULL,
+  `category` varchar(50) NOT NULL,
+  `stock` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `description`, `price`, `image_url`, `category`, `stock`) VALUES
+(9, 'Roxanne', 'Treat your beloved like the heroine Roxanne in Cyrano de Bergerac.\r\n\r\n', 10000.00, '674b12e31bbe35.42383220.png', '0', 100);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `services`
 --
 
@@ -289,6 +357,19 @@ ALTER TABLE `carousel_text`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- Indexes for table `gallery`
 --
 ALTER TABLE `gallery`
@@ -310,6 +391,12 @@ ALTER TABLE `messages`
 -- Indexes for table `package_images`
 --
 ALTER TABLE `package_images`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -353,6 +440,18 @@ ALTER TABLE `carousel_text`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
@@ -375,6 +474,12 @@ ALTER TABLE `messages`
 --
 ALTER TABLE `package_images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `services`

@@ -59,7 +59,8 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/custom.css">
 	<link rel="stylesheet" href="css/alerts.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
    
 
@@ -95,7 +96,8 @@ $result = $conn->query($sql);
                     <li><a class="nav-link" href="#gallery">Gallery</a></li>
                     <li><a class="nav-link" href="#services">Services</a></li>
                     <li><a class="nav-link" href="#contact">Contact</a></li>
-                    <li><a class="nav-link shop-link" href="#shop"><i class="fas fa-shopping-cart"></i> Shop</a></li>
+					<li><a class="nav-link shop-link" href="shop/shop.php"><i class="fas fa-cart-shopping"></i> Shop</a></li>
+
                 </ul>
             </div>
         </div>
