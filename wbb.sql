@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2024 at 05:39 PM
+-- Generation Time: Dec 02, 2024 at 07:30 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -275,7 +275,14 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `image_url`, `category`, `stock`) VALUES
-(9, 'Roxanne', 'Treat your beloved like the heroine Roxanne in Cyrano de Bergerac.\r\n\r\n', 10000.00, '674b12e31bbe35.42383220.png', '0', 100);
+(9, 'Roxanne', 'Treat your beloved like the heroine Roxanne in Cyrano de Bergerac.\r\n\r\n', 10000.00, '674b12e31bbe35.42383220.png', '1', 0),
+(19, 'RED ROSE HAPPINESS', 'Red Roses: There is no flower that expresses true love as timelessly and as perfectly as the long. A Bouquet of 12 fresh red roses carefully wrapped and tied-up with a ribbon.', 6500.00, 'red_rose_happiness.jpg', '1', 100),
+(20, 'WISHING YOU THE BEST', 'Premium quality yellow Lilies beautifully wrapped and tied up with a bow.\r\nThis charming bouquet showcases lovely pink chrysanthemums, a delightful symphony of delicate beauty. ', 8500.00, 'WhatsApp-Image-2024-02-08-at-110327-AM.jpeg', '1', 100),
+(21, 'GLEAMING LOVE', 'Shop for this exquisite bouquet of red roses for your loved ones! Perfect for expressing heartfelt emotions, this alluring bouquet features a bunch of garden-fresh and long-stemmed red roses paired impeccably with white baby’s breath blooms! ', 5000.00, 'WhatsApp-Image-2024-02-08-at-111826-AM.jpeg', '1', 100),
+(22, 'CHOCOLATE CHIP CAKE 1KG', 'A soft & rich chocolate chip sponge cake layer & a deliciously soft chocolate cake layer sandwiched & garnished with creamy smooth chocolate ganache.', 8500.00, 'CHOCOLATE-CHIP-CAKE.jpg', '2', 50),
+(24, 'CHOCOLATE CRUMBLE', 'A soft rich, crunchy chocolate cake made with the finest cashew nuts layered with creamy butter icing topped with s delicious white chocolate ganache.', 8499.99, 'CHOCOLATE-CRUMBLE.jpg', '2', 50),
+(25, 'COFFEE LOVER CAKE 1 kg', 'A combination of rich chocolate mousse & coffee butter cream layered with almond sponge, soaked in brewed extract, covered with chocolate ganache.', 8500.00, 'COFFEE-LOVER-CAKE-2.jpg', '2', 50),
+(26, 'NEW YORK BLUEBERRY CHEESE CAKE ', 'Biscuit Based filled with smoothy cream cheese and garnished with Apricot glaze & Blue Berries', 15000.00, 'NEW-YORK-CHEESE-CAKE.jpg', '2', 50);
 
 -- --------------------------------------------------------
 
@@ -479,7 +486,7 @@ ALTER TABLE `package_images`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `services`

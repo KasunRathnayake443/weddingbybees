@@ -1,17 +1,16 @@
 <?php
+session_start();
 include('inc/config.php');
 include('inc/links.php');
 
 
-// Get the selected category ID from the URL
-// Get the selected category ID from the URL
+
 $selected_category_id = isset($_GET['category_id']) ? intval($_GET['category_id']) : 0;
 
-// Fetch all categories
 $categories_query = "SELECT * FROM categories";
 $categories_result = mysqli_query($conn, $categories_query);
 
-// Fetch products based on the selected category
+
 if ($selected_category_id > 0) {
     $products_query = "SELECT * FROM products WHERE category = $selected_category_id AND stock > 0";
 } else {
@@ -31,14 +30,19 @@ $products_result = mysqli_query($conn, $products_query);
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <script src="../js/bootstrap.min.js"></script>
     <link rel="shortcut icon" href="../images/logo/<?php echo $result_general['logo']?>" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+
+
 
 </head>
 <body>
 
 <?php require('header.php'); ?>
+<?php require('cart.php'); ?>
 
 <div class="container my-5">
     <h1 class="text-center mb-4" >Our Products</h1>
@@ -64,34 +68,195 @@ $products_result = mysqli_query($conn, $products_query);
         </div>
 
         <!-- Products Section -->
-            <div class="col-md-9">
-                <div class="row">
-                    <?php while ($product = mysqli_fetch_assoc($products_result)): ?>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100 d-flex flex-column">
-                                <img src="../images/products/<?php echo htmlspecialchars($product['image_url']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['name']); ?>">
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
-                                    <p class="card-text"><?php echo htmlspecialchars($product['description']); ?></p>
-                                    <p class="card-text fw-bold">Rs: <?php echo number_format($product['price'], 2); ?></p>
-                                    <div class="mt-auto">
-                                        <?php if ($product['stock'] > 0): ?>
-                                            <a href="add_to_cart.php?product_id=<?php echo $product['id']; ?>" class="btn btn-primary w-100">Add to Cart</a>
-                                        <?php else: ?>
-                                            <span class="badge bg-danger w-100">Out of Stock</span>
-                                        <?php endif; ?>
-                                    </div>
+        <div class="col-md-9">
+            <div class="row">
+                <?php while ($product = mysqli_fetch_assoc($products_result)): ?>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 d-flex flex-column">
+                            <img src="../images/products/<?php echo htmlspecialchars($product['image_url']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
+                                <p class="card-text"><?php echo htmlspecialchars($product['description']); ?></p>
+                                <p class="card-text fw-bold">Rs: <?php echo number_format($product['price'], 2); ?></p>
+                                <div class="mt-auto">
+                                    <?php if ($product['stock'] > 0): ?>
+                                        <button class="btn btn-primary w-100 add-to-cart-btn" 
+                                                data-id="<?php echo $product['id']; ?>" 
+                                                data-name="<?php echo htmlspecialchars($product['name']); ?>" 
+                                                data-price="<?php echo $product['price']; ?>">
+                                            Add to Cart
+                                        </button>
+                                    <?php else: ?>
+                                        <span class="badge bg-danger w-100">Out of Stock</span>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
-                    <?php endwhile; ?>
-                </div>
+                    </div>
+                <?php endwhile; ?>
             </div>
+        </div>
+
 
     </div>
 </div>
 
 
+
+<div class="modal" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="cartItems">
+                <!-- Cart Items will be dynamically added here -->
+            </div>
+            <div id="cartTotal" class="modal-footer">
+                <span class="fw-bold">Total: Rs: <span id="totalPrice">0.00</span></span>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" id="checkoutBtn">Go to Checkout</button>
+                <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 </body>
+
 </html>
 
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cartItemsContainer = document.getElementById('cartItems');
+    const cartTotalContainer = document.getElementById('cartTotal');
+
+   
+    if (!sessionStorage.getItem('cart')) {
+        sessionStorage.setItem('cart', JSON.stringify([]));
+    }
+
+
+    function renderCart() {
+        const cart = JSON.parse(sessionStorage.getItem('cart'));
+        cartItemsContainer.innerHTML = '';
+        let total = 0;
+
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
+            cartTotalContainer.innerHTML = 'Total: Rs 0.00';
+        } else {
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item mb-2 d-flex justify-content-between align-items-center">
+                        <div>
+                            <p>${item.name} - Rs: ${item.price} x 
+                            <input type="number" class="form-control w-auto d-inline" 
+                                   value="${item.quantity}" min="1" data-id="${item.id}" 
+                                   data-price="${item.price}"> 
+                            = Rs: ${itemTotal.toFixed(2)}</p>
+                        </div>
+                        <button class="btn btn-danger remove-item-btn" data-id="${item.id}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            cartTotalContainer.innerHTML = 'Total: Rs ' + total.toFixed(2);
+        }
+    }
+
+
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.dataset.id;
+            const productName = this.dataset.name;
+            const productPrice = parseFloat(this.dataset.price);
+
+          
+            const cart = JSON.parse(sessionStorage.getItem('cart'));
+
+        
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    quantity: 1
+                });
+            }
+
+            
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+
+    
+            renderCart();
+
+        
+            const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+            cartModal.show();
+        });
+    });
+
+  
+    cartItemsContainer.addEventListener('input', function(event) {
+        if (event.target && event.target.type === 'number') {
+            const productId = event.target.dataset.id;
+            const newQuantity = parseInt(event.target.value, 10);
+            const productPrice = parseFloat(event.target.dataset.price);
+
+          
+            const cart = JSON.parse(sessionStorage.getItem('cart'));
+
+        
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity = newQuantity > 0 ? newQuantity : 1; 
+            }
+
+         
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+
+         
+            renderCart();
+        }
+    });
+
+ 
+    cartItemsContainer.addEventListener('click', function(event) {
+        if (event.target && event.target.classList.contains('remove-item-btn')) {
+            const productId = event.target.dataset.id;
+
+        
+            const cart = JSON.parse(sessionStorage.getItem('cart'));
+
+          
+            const updatedCart = cart.filter(item => item.id !== productId);
+
+          
+            sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+
+            
+            renderCart();
+        }
+    });
+
+   
+    renderCart();
+});
+
+</script>
