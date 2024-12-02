@@ -43,32 +43,47 @@ $categories_result = $conn->query($sql_categories);
             <?php } ?>
         </div>
 
-        <form action="products.php" method="POST" enctype="multipart/form-data">
-            <label for="new_image">Upload New Image:</label>
-            <input type="file" name="new_image" id="new_image" required>
+        <?php
 
-            <label for="name">Product Name:</label>
-            <input type="text" name="name" id="name" required>
-            
-            <label for="description">Description:</label>
-            <textarea name="description" id="description" required></textarea>
+$categories_query = "SELECT * FROM categories";
+$categories_result = mysqli_query($conn, $categories_query);
+?>
+<form action="products.php" method="POST" enctype="multipart/form-data">
+   
+    <label for="new_image">Upload New Image:</label>
+    <input type="file" name="new_image" id="new_image" required>
 
-            <label for="price">Price:</label>
-            <input type="number" step="0.01" name="price" id="price" required>
 
-            <label for="category">Category:</label>
-                <select name="category" id="category" required>
-                    <option value="" disabled selected>Select a category</option>
-                     <?php while($category = $categories_result->fetch_assoc()) { ?>
-                      <option value="<?php echo $category['name']; ?>"><?php echo htmlspecialchars($category['name']); ?></option>
-                     <?php } ?>
-                </select>
+    <label for="name">Product Name:</label>
+    <input type="text" name="name" id="name" required>
+    
 
-            <label for="quantity">Quantity:</label>
-            <input type="number" name="quantity" id="quantity" required>
+    <label for="description">Description:</label>
+    <textarea name="description" id="description" required></textarea>
 
-            <button type="submit" name="submit">Upload</button>
-        </form>
+  
+    <label for="price">Price:</label>
+    <input type="number" step="0.01" name="price" id="price" required>
+
+ 
+    <label for="product_category" class="form-label">Category:</label>
+    <select class="form-select" id="product_category" name="product_category" required>
+        <option value="" disabled selected>Select a Category</option>
+        <?php while ($category = mysqli_fetch_assoc($categories_result)): ?>
+            <option value="<?php echo $category['id']; ?>">
+                <?php echo htmlspecialchars($category['name']); ?>
+            </option>
+        <?php endwhile; ?>
+    </select>
+
+  
+    <label for="quantity">Quantity:</label>
+    <input type="number" name="quantity" id="quantity" required>
+
+   
+    <button type="submit" name="submit">Upload</button>
+</form>
+
     </div>
 </div>
 
@@ -92,40 +107,90 @@ $categories_result = $conn->query($sql_categories);
 </body>
 </html>
 
+
 <?php
 
-if (isset($_FILES['new_image']) && $_FILES['new_image']['error'] === 0) {
-    $image_name = $_FILES['new_image']['name'];
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+ 
+    $product_name = mysqli_real_escape_string($conn, $_POST['name']);
+    $product_description = mysqli_real_escape_string($conn, $_POST['description']);
+    $product_price = floatval($_POST['price']);
+    $product_stock = intval($_POST['quantity']);
+    $product_category = intval($_POST['product_category']);
+    
+   
+    $image_name = basename($_FILES['new_image']['name']);
     $image_tmp_name = $_FILES['new_image']['tmp_name'];
-    $image_ext = strtolower(pathinfo($image_name, PATHINFO_EXTENSION));
-    $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
+    $upload_dir = '../images/products/';
+    $image_path = $upload_dir . $image_name;
 
-    if (in_array($image_ext, $allowed_ext)) {
-        $upload_dir = '../images/products/';
-        $new_image_name = uniqid('', true) . '.' . $image_ext;
-        $upload_path = $upload_dir . $new_image_name;
+ 
+    if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0777, true);
+    }
 
-        if (move_uploaded_file($image_tmp_name, $upload_path)) {
-            $name = $_POST['name'];
-            $description = $_POST['description'];
-            $price = $_POST['price'];
-            $category = $_POST['category'];
-            $stock = $_POST['quantity'];
-
-            $sql = "INSERT INTO products (name, description, price, image_url, category, stock) VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssdsdi", $name, $description, $price, $new_image_name, $category, $stock);
-            $stmt->execute();
-
-            echo "<script> document.location='products.php?notifications1=1';</script>";
-            exit();
+    if (move_uploaded_file($image_tmp_name, $image_path)) {
+       
+        $insert_query = "
+            INSERT INTO products (name, description, price, stock, category, image_url) 
+            VALUES ('$product_name', '$product_description', $product_price, $product_stock, $product_category, '$image_name')
+        ";
+        
+        if (mysqli_query($conn, $insert_query)) {
+            echo "<script>
+                 
+                    document.location = 'products.php?notifications1=1';
+                  </script>";
         } else {
-            echo "Error uploading the image.";
+            echo "<div class='alert alert-danger'>Database Error: " . mysqli_error($conn) . "</div>";
         }
     } else {
-        echo "Invalid file type. Only JPG, JPEG, PNG, and GIF files are allowed.";
+        echo "<div class='alert alert-danger'>Failed to upload image.</div>";
     }
 }
+
+
+?>
+
+
+<?php
+
+
+
+// if (isset($_FILES['new_image']) && $_FILES['new_image']['error'] === 0) {
+//     $image_name = $_FILES['new_image']['name'];
+//     $image_tmp_name = $_FILES['new_image']['tmp_name'];
+//     $image_ext = strtolower(pathinfo($image_name, PATHINFO_EXTENSION));
+//     $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
+
+//     if (in_array($image_ext, $allowed_ext)) {
+//         $upload_dir = '../images/products/';
+//         $new_image_name = uniqid('', true) . '.' . $image_ext;
+//         $upload_path = $upload_dir . $new_image_name;
+
+//         if (move_uploaded_file($image_tmp_name, $upload_path)) {
+//             $name = $_POST['name'];
+//             $description = $_POST['description'];
+//             $price = $_POST['price'];
+//             $category = $_POST['category'];
+//             $stock = $_POST['quantity'];
+
+//             $sql = "INSERT INTO products (name, description, price, image_url, category, stock) VALUES (?, ?, ?, ?, ?, ?)";
+//             $stmt = $conn->prepare($sql);
+//             $stmt->bind_param("ssdsdi", $name, $description, $price, $new_image_name, $category, $stock);
+//             $stmt->execute();
+
+//             echo "<script> document.location='products.php?notifications1=1';</script>";
+//             exit();
+//         } else {
+//             echo "Error uploading the image.";
+//         }
+//     } else {
+//         echo "Invalid file type. Only JPG, JPEG, PNG, and GIF files are allowed.";
+//     }
+// }
 
 
 

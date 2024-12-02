@@ -99,10 +99,9 @@
     height: 35px;
   }
 
- 
   .btn-login,
   .btn-register {
-    width: 45%; 
+    width: 45%;
     margin: 0 5%;
   }
 }
@@ -134,7 +133,7 @@
   .btn-login,
   .btn-register {
     margin-top: 15px;
-    width: 100%; 
+    width: 100%;
     margin-left: 0;
   }
 }
@@ -146,10 +145,7 @@
   background-color: #333;
   border: none;
   position: relative;
-  
 }
-
-
 
 .navbar-toggler-icon::before {
   top: -8px;
@@ -171,4 +167,29 @@
 
 .navbar-toggler.collapsed .navbar-toggler-icon {
   background-color: transparent;
+}
+
+.category-select {
+  text-align: right;
+}
+
+.category-select select {
+  width: auto;
+}
+
+.card {
+  max-width: 18rem; 
+}
+
+.card img {
+  height: 200px; 
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1rem; 
+}
+
+.card-text {
+  font-size: 0.9rem; 
 }
