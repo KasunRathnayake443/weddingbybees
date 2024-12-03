@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2024 at 12:04 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Dec 03, 2024 at 06:50 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,7 +37,17 @@ CREATE TABLE `bookings` (
   `package_price` decimal(10,2) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.bookings: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`bookings`&#039; at line 1
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `customer_name`, `email`, `wedding_date`, `venue`, `package_name`, `package_price`, `created_at`) VALUES
+(1, 'abc', 'madkasunmax@gmail.com', '2024-12-06', 'Hotel', 'Budget Bliss Package', 65000.00, '2024-11-15 07:45:49'),
+(2, 'abc', 'madkasunmax@gmail.com', '2024-11-23', 'Hotel', 'Budget Bliss Package', 65000.00, '2024-11-15 07:48:34'),
+(3, 'abc', 'madkasunmax@gmail.com', '2024-11-28', 'Hotel', 'Budget Bliss Package', 65000.00, '2024-11-15 07:49:08'),
+(4, 'abc', 'madkasunmax@gmail.com', '2024-11-21', 'Hotel', 'Budget Bliss Package', 65000.00, '2024-11-15 07:49:39'),
+(5, 'abc', 'abc@gmail.com', '2024-11-23', 'Grand Hotel', 'Luxe Dream Package', 125000.00, '2024-11-15 07:56:14');
 
 -- --------------------------------------------------------
 
@@ -49,7 +59,16 @@ CREATE TABLE `carousel` (
   `id` int(11) NOT NULL,
   `image` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.carousel: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`carousel`&#039; at line 1
+
+--
+-- Dumping data for table `carousel`
+--
+
+INSERT INTO `carousel` (`id`, `image`) VALUES
+(28, '671fb608cd8348.52006254.jpg'),
+(29, '671fb60d112569.76558522.jpg'),
+(30, '671fb611b69c72.98155275.jpg'),
+(31, '671fb623296653.65172157.jpg');
 
 -- --------------------------------------------------------
 
@@ -63,7 +82,6 @@ CREATE TABLE `carousel-text` (
   `text2` varchar(100) NOT NULL,
   `text3` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.carousel-text: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`carousel-text`&#039; at line 1
 
 -- --------------------------------------------------------
 
@@ -77,7 +95,13 @@ CREATE TABLE `carousel_text` (
   `text2` varchar(100) NOT NULL,
   `text3` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.carousel_text: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`carousel_text`&#039; at line 1
+
+--
+-- Dumping data for table `carousel_text`
+--
+
+INSERT INTO `carousel_text` (`id`, `text1`, `text2`, `text3`) VALUES
+(1, 'Wedding By Bees', 'Your wedding is a movie, and we\'ll take you Beyond the Script.', 'Let the Journey of Forever Begin');
 
 -- --------------------------------------------------------
 
@@ -91,7 +115,14 @@ CREATE TABLE `categories` (
   `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.categories: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`categories`&#039; at line 1
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `description`, `created_at`) VALUES
+(1, 'Flowers Bouquet', 'Various types of flowers bouquets', '2024-11-30 09:31:13'),
+(2, 'Cake', 'Various Cake', '2024-11-30 10:52:36');
 
 -- --------------------------------------------------------
 
@@ -109,7 +140,14 @@ CREATE TABLE `customer` (
   `profile_pic` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.customer: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`customer`&#039; at line 1
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`id`, `name`, `email`, `phone`, `address`, `password`, `profile_pic`, `created_at`) VALUES
+(2, 'Kasun Rathnayake', 'madkasunmax@gmail.com', '0718948284', '550/36 A', '$2y$10$X5ytg8ybyepbDXxxDZxg0eaCSbMZdpOZgxLxxr05hW/7XgBXsFXOm', 'png-clipart-computer-icons-font-awesome-user-font-awesome-miscellaneous-rectangle-thumbnail.png', '2024-11-30 16:46:38'),
+(3, 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', '$2y$10$hqV.8FQCEotFpMdGU8Hv2ObnLeUIXa8/./yAb.dnBZX1kBoW1xH6a', 'file.png', '2024-12-02 18:35:41');
 
 -- --------------------------------------------------------
 
@@ -121,7 +159,20 @@ CREATE TABLE `gallery` (
   `id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.gallery: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`gallery`&#039; at line 1
+
+--
+-- Dumping data for table `gallery`
+--
+
+INSERT INTO `gallery` (`id`, `image`) VALUES
+(4, '67136ef41e3081.63128786.jpg'),
+(5, '67136efccdd6b0.82846580.jpg'),
+(6, '67136f01bf0f28.27217046.jpg'),
+(7, '67136f061913a8.99559292.jpg'),
+(10, '6713aa67d3d872.92004509.jpg'),
+(11, '6713f286a6cb27.44236094.jpg'),
+(12, '6713f28e67db78.99092610.jpg'),
+(13, '6713f2a232b348.96406682.jpg');
 
 -- --------------------------------------------------------
 
@@ -146,7 +197,13 @@ CREATE TABLE `general_settings` (
   `event_text` text NOT NULL,
   `auther` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.general_settings: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`general_settings`&#039; at line 1
+
+--
+-- Dumping data for table `general_settings`
+--
+
+INSERT INTO `general_settings` (`id`, `website_name`, `facebook_url`, `instagram_url`, `phone`, `address`, `logo`, `about_us_text`, `about_us_text_2`, `about_us_image1`, `about_us_image2`, `packages_text`, `gallery_text`, `event_text`, `auther`) VALUES
+(1, 'Wedding By bees', 'https://www.facebook.com/weddingbybees', 'https://www.instagram.com/weddingbybees?igsh=Y3Q2czJmbnYzd3B2', '076 857 3000', ' 518 jana jaya city mall, Rajagiriya', 'logo.png', 'At Wedding by Bees, we believe that every love story is unique and deserves to be celebrated with elegance and style. Founded on the principles of creativity, passion, and attention to detail, we specialize in transforming your wedding dreams into reality.\r\n\r\nOur team of dedicated professionals is committed to making your special day as memorable as possible, whether you\'re envisioning a grand celebration or an intimate gathering. From stunning floral arrangements to breathtaking venue decor, we take pride in curating personalized experiences that reflect your unique love story.\r\n\r\nWith years of experience in the wedding industry, we understand that every detail matters. That\'s why we offer a comprehensive range of services, including venue decoration, floral design, lighting, and event coordination, to ensure that your day runs smoothly from start to finish.\r\n\r\nLet Wedding by Bees take care of the details so you can focus on what matters most—celebrating love.', 'At Wedding by Bees, we take pride in creating unforgettable moments through exquisite decorations and thoughtful design. Every image in this gallery is a testament to our dedication to turning dreams into reality, capturing the essence of beauty and elegance in each event we undertake. Browse through our collection to get inspired by our past projects, and see how we can bring your vision to life.', '241360648_225646269417874_8241028221639879764_n.png', 'gallery-06.jpg', '   The most important day of your life can also be the most daunting. This is why at Wedding by Bees we have created packages of outstanding value. You decide when and where and we do the rest.', ' Explore our gallery and get inspired by the beautiful moments we\'ve crafted for countless celebrations. From elegant floral arrangements to stunning decor setups, each image tells a story of joy, love, and creativity. Whether you\'re planning an intimate wedding or a grand event, our gallery showcases the passion and dedication we put into every detail.', '', 'Kavishan Anjana');
 
 -- --------------------------------------------------------
 
@@ -162,7 +219,17 @@ CREATE TABLE `messages` (
   `message` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.messages: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`messages`&#039; at line 1
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `name`, `email`, `subject`, `message`, `created_at`) VALUES
+(1, 'Kasun Rathnayake', 'madkasunmax@gmail.com', 'ddd', 'ddd', '2024-10-19 15:11:50'),
+(2, 'Kasun Rathnayake', 'madkasunmax@gmail.com', 'ddd', 'ddddd', '2024-10-19 15:12:03'),
+(3, 'Kasun Rathnayake', 'madkasunmax@gmail.com', 'ddd', 'ddddd', '2024-10-19 15:13:30'),
+(4, 'Kasun Rathnayake', 'madkasunmax@gmail.com', 'test', 'dscdvdv', '2024-10-20 14:59:51'),
+(5, 'Kasun Rathnayake', 'madkasunmax@gmail.com', 'kavi', 'test 12344', '2024-10-20 16:00:10');
 
 -- --------------------------------------------------------
 
@@ -187,7 +254,33 @@ CREATE TABLE `orders` (
   `billing_phone` varchar(20) NOT NULL,
   `billing_address` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.orders: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`orders`&#039; at line 1
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `total_price`, `order_status`, `payment_status`, `payment_method`, `shipping_name`, `shipping_email`, `shipping_phone`, `shipping_address`, `billing_name`, `billing_email`, `billing_phone`, `billing_address`) VALUES
+(1, 3, '2024-12-03 12:58:31', 0.00, 'Pending', 'Paid', 'Cash on Delivery', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', '', '', '', ''),
+(2, 3, '2024-12-03 13:05:49', 0.00, 'Pending', 'Paid', 'Cash on Delivery', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', '', '', '', ''),
+(3, 3, '2024-12-03 13:09:53', 0.00, 'Pending', 'Paid', 'Cash on Delivery', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A'),
+(4, 3, '2024-12-03 13:16:53', 0.00, 'Pending', 'Paid', 'Cash on Delivery', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A'),
+(5, 3, '2024-12-03 13:19:41', 0.00, 'Pending', 'Paid', 'Cash on Delivery', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `total_price` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -202,7 +295,16 @@ CREATE TABLE `package_images` (
   `price` decimal(10,2) DEFAULT NULL,
   `title` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.package_images: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`package_images`&#039; at line 1
+
+--
+-- Dumping data for table `package_images`
+--
+
+INSERT INTO `package_images` (`id`, `image`, `description`, `price`, `title`) VALUES
+(4, '6713f2d79a8df4.47008372.png', '\"Celebrate beautifully without stretching your budget. The Budget Bliss Package is designed to add a charming touch to your special day with simple yet elegant decor.\"', 65000.00, 'Budget Bliss Package'),
+(5, '6713f2e2387e03.76386741.jpg', '\"Create timeless memories with the Classic Elegance Package. This package blends sophistication with affordability, giving your event a warm, memorable ambiance.\"', 85000.00, 'Classic Elegance Package.'),
+(6, '6713f2e5859711.18219212.jpg', '\"Set the stage for romance with the Premium Romance Package. With stylish decor and tasteful lighting, this package creates a dreamy, elegant atmosphere for any occasion.\"', 100000.00, 'Premium Romance Package'),
+(8, '6713f2f150cac9.66524457.jpg', '\"Turn your vision into reality with the Luxe Dream Package. For those seeking a grand experience, this package offers everything to make your day extraordinarily luxurious and memorable.\"', 125000.00, 'Luxe Dream Package');
 
 -- --------------------------------------------------------
 
@@ -219,7 +321,20 @@ CREATE TABLE `products` (
   `category` varchar(50) NOT NULL,
   `stock` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.products: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`products`&#039; at line 1
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `description`, `price`, `image_url`, `category`, `stock`) VALUES
+(9, 'Roxanne', 'Treat your beloved like the heroine Roxanne in Cyrano de Bergerac.\r\n\r\n', 10000.00, '674b12e31bbe35.42383220.png', '1', 0),
+(19, 'RED ROSE HAPPINESS', 'Red Roses: There is no flower that expresses true love as timelessly and as perfectly as the long. A Bouquet of 12 fresh red roses carefully wrapped and tied-up with a ribbon.', 6500.00, 'red_rose_happiness.jpg', '1', 100),
+(20, 'WISHING YOU THE BEST', 'Premium quality yellow Lilies beautifully wrapped and tied up with a bow.\r\nThis charming bouquet showcases lovely pink chrysanthemums, a delightful symphony of delicate beauty. ', 8500.00, 'WhatsApp-Image-2024-02-08-at-110327-AM.jpeg', '1', 100),
+(21, 'GLEAMING LOVE', 'Shop for this exquisite bouquet of red roses for your loved ones! Perfect for expressing heartfelt emotions, this alluring bouquet features a bunch of garden-fresh and long-stemmed red roses paired impeccably with white baby’s breath blooms! ', 5000.00, 'WhatsApp-Image-2024-02-08-at-111826-AM.jpeg', '1', 100),
+(22, 'CHOCOLATE CHIP CAKE 1KG', 'A soft & rich chocolate chip sponge cake layer & a deliciously soft chocolate cake layer sandwiched & garnished with creamy smooth chocolate ganache.', 8500.00, 'CHOCOLATE-CHIP-CAKE.jpg', '2', 50),
+(24, 'CHOCOLATE CRUMBLE', 'A soft rich, crunchy chocolate cake made with the finest cashew nuts layered with creamy butter icing topped with s delicious white chocolate ganache.', 8499.99, 'CHOCOLATE-CRUMBLE.jpg', '2', 50),
+(25, 'COFFEE LOVER CAKE 1 kg', 'A combination of rich chocolate mousse & coffee butter cream layered with almond sponge, soaked in brewed extract, covered with chocolate ganache.', 8500.00, 'COFFEE-LOVER-CAKE-2.jpg', '2', 50),
+(26, 'NEW YORK BLUEBERRY CHEESE CAKE ', 'Biscuit Based filled with smoothy cream cheese and garnished with Apricot glaze & Blue Berries', 15000.00, 'NEW-YORK-CHEESE-CAKE.jpg', '2', 50);
 
 -- --------------------------------------------------------
 
@@ -233,7 +348,23 @@ CREATE TABLE `services` (
   `name` varchar(100) NOT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.services: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`services`&#039; at line 1
+
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`id`, `image`, `name`, `description`) VALUES
+(1, '12.webp', 'Bouquets', 'The main bouquet carried by the bride. Smaller bouquets for the bridesmaids.'),
+(2, '5.jpg', 'Boutonnieres', 'Floral arrangements worn by the groom, groomsmen, and other male members of the wedding party.'),
+(7, '9.jpg', 'Centerpieces', 'Floral arrangements placed in the center of each dining table at the reception.'),
+(8, '7.jpg', 'Floral Installations', 'Larger floral displays, such as flower walls, hanging installations, or floral chandeliers, to create a visually stunning atmosphere.'),
+(9, '3.jpg', 'Reception Decor', 'Additional floral arrangements or greenery throughout the reception venue, including entrance decor, escort card table arrangements, and lounge area arrangements.'),
+(10, '11.jpg', 'Floral Decor for Cake', 'Coordinating flowers to complement the wedding cake or dessert table.'),
+(12, '6.jpg', 'Petals and Aisle Runners', 'Sprinkling petals down the aisle or using floral aisle runners for added elegance.'),
+(13, '4.jpg', 'Consultation and Design', 'Collaborating with the couple to understand their vision, theme, and color scheme, and providing professional advice on floral choices.'),
+(14, '8.jpg', 'Delivery and Set-Up', 'Transporting the floral arrangements to the venue and setting them up according to the agreed-upon design.'),
+(15, '1.jpg', 'Customization', 'Creating custom floral designs to match the couple’s unique style and preferences.'),
+(16, '10.jpg', 'Seasonal Considerations', 'Taking into account the seasonality of flowers and suggesting options that are readily available and in line with the wedding date.');
 
 -- --------------------------------------------------------
 
@@ -247,7 +378,14 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
--- Error reading data for table wbb.users: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near &#039;FROM `wbb`.`users`&#039; at line 1
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
+(1, 'testss', 'test@gmail.com', '123'),
+(4, 'Somapala', 'madkasunmax@gmail.comsasa', '$2y$10$5enoucOMe7EsVWvRqyiIIunonV/5sYN27KiWVXTdMiZHosZWfFTE6');
 
 --
 -- Indexes for dumped tables
@@ -316,6 +454,14 @@ ALTER TABLE `orders`
   ADD KEY `customer_id` (`customer_id`);
 
 --
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `package_images`
 --
 ALTER TABLE `package_images`
@@ -377,7 +523,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `gallery`
@@ -401,7 +547,13 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `package_images`
@@ -436,6 +588,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`);
+
+--
+-- Constraints for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
