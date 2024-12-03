@@ -44,7 +44,7 @@ $customer = mysqli_fetch_assoc($result);
     <h2 class="text-center">Checkout</h2>
     <div class="card p-4">
         <div class="row">
-        
+       
             <div class="col-md-6">
                 <h4>Billing Details</h4>
                 <p><strong>Name:</strong> <?php echo htmlspecialchars($customer['name']); ?></p>
@@ -53,7 +53,7 @@ $customer = mysqli_fetch_assoc($result);
                 <p><strong>Address:</strong> <?php echo htmlspecialchars($customer['address']); ?></p>
             </div>
 
-       
+     
             <div class="col-md-6">
                 <h4>Shipping Details</h4>
                 <form id="shippingForm">
@@ -80,7 +80,26 @@ $customer = mysqli_fetch_assoc($result);
             </div>
         </div>
 
-      
+        
+        <div class="mt-4">
+            <h4>Payment Method</h4>
+            <form id="paymentForm">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" value="Cash on Delivery" checked>
+                    <label class="form-check-label" for="cashOnDelivery">
+                        Cash on Delivery
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" value="Card">
+                    <label class="form-check-label" for="cardPayment">
+                        Card
+                    </label>
+                </div>
+            </form>
+        </div>
+
+       
         <div class="mt-4">
             <h4>Order Summary</h4>
             <div id="cartItems"></div>
@@ -95,6 +114,7 @@ $customer = mysqli_fetch_assoc($result);
 
 
     <?php include('footer.php'); ?>
+
 </body>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -102,20 +122,41 @@ document.addEventListener('DOMContentLoaded', function () {
     const cartItemsContainer = document.getElementById('cartItems');
     const totalPriceContainer = document.getElementById('totalPrice');
 
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
-        totalPriceContainer.textContent = '0.00';
-    } else {
-        let total = 0;
-        cart.forEach(item => {
-            const itemTotal = item.price * item.quantity;
-            total += itemTotal;
-            cartItemsContainer.innerHTML += `
-                <p>${item.name} - Rs: ${item.price} x ${item.quantity} = Rs: ${itemTotal.toFixed(2)}</p>
-            `;
-        });
-        totalPriceContainer.textContent = total.toFixed(2);
+    function renderCart() {
+        cartItemsContainer.innerHTML = '';
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+            totalPriceContainer.textContent = '0.00';
+        } else {
+            let total = 0;
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            <p class="m-0">${item.name} - Rs: ${item.price} x ${item.quantity} = Rs: ${itemTotal.toFixed(2)}</p>
+                        </div>
+                        <button class="btn btn-danger btn-sm remove-item" data-index="${index}">Remove</button>
+                    </div>
+                `;
+            });
+            totalPriceContainer.textContent = total.toFixed(2);
+        }
     }
+
+    renderCart();
+
+    
+    cartItemsContainer.addEventListener('click', function (event) {
+        if (event.target.classList.contains('remove-item')) {
+            const itemIndex = event.target.getAttribute('data-index');
+            cart.splice(itemIndex, 1); 
+            sessionStorage.setItem('cart', JSON.stringify(cart)); 
+            renderCart(); 
+        }
+    });
 });
 </script>
+
 </html>
