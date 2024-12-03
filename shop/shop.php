@@ -3,12 +3,11 @@ session_start();
 include('inc/config.php');
 include('inc/links.php');
 
-
-
 $selected_category_id = isset($_GET['category_id']) ? intval($_GET['category_id']) : 0;
 
 $categories_query = "SELECT * FROM categories";
 $categories_result = mysqli_query($conn, $categories_query);
+
 
 
 if ($selected_category_id > 0) {
@@ -17,9 +16,10 @@ if ($selected_category_id > 0) {
     $products_query = "SELECT * FROM products WHERE stock > 0";
 }
 $products_result = mysqli_query($conn, $products_query);
-
-
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +31,7 @@ $products_result = mysqli_query($conn, $products_query);
     <script src="../js/bootstrap.min.js"></script>
     <link rel="shortcut icon" href="../images/logo/<?php echo $result_general['logo']?>" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link rel="stylesheet" href="../css/alerts.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
@@ -45,7 +45,7 @@ $products_result = mysqli_query($conn, $products_query);
 <?php require('cart.php'); ?>
 
 <div class="container my-5">
-    <h1 class="text-center mb-4" >Our Products</h1>
+    <h1 class="text-center mb-4" style="font-size:30px;" >Our Products</h1>
     
     <div class="container my-4">
     <div class="row">
@@ -96,12 +96,9 @@ $products_result = mysqli_query($conn, $products_query);
                 <?php endwhile; ?>
             </div>
         </div>
-
-
     </div>
 </div>
-
-
+</div>
 
 <div class="modal" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
@@ -127,11 +124,20 @@ $products_result = mysqli_query($conn, $products_query);
 
 
 
+<?php require('footer.php'); ?>
+
+
+                <div class="nothing2" id="alertBox2">
+                    <i class="fa fa-exclamation-triangle "></i> 
+                    <span class="message-text">You must log in first to proceed to checkout.</span>                            
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                </div>
 
 </body>
 
 </html>
 
+<script src="../js/notifications.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
