@@ -85,7 +85,7 @@
 
 @media (max-width: 992px) {
   #nav-bar .navbar-nav {
-    justify-content: space-between; /* Add space between items */
+    justify-content: space-between; 
     margin-top: 10px;
   }
 

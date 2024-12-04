@@ -96,7 +96,7 @@ $result = $conn->query($sql);
                     <li><a class="nav-link" href="#gallery">Gallery</a></li>
                     <li><a class="nav-link" href="#services">Services</a></li>
                     <li><a class="nav-link" href="#contact">Contact</a></li>
-					<li><a class="nav-link shop-link" href="shop/shop.php"><i class="fas fa-cart-shopping"></i> Shop</a></li>
+					<li><a class="nav-link shop-link" style="background: #ffc107; color: #ffffff; font-weight: bold; border-radius: 5px;" href="shop/shop.php"><i class="fas fa-cart-shopping"></i> Shop</a></li>
 
                 </ul>
             </div>

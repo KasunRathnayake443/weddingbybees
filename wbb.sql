@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2024 at 06:50 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Dec 04, 2024 at 09:42 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -252,19 +252,9 @@ CREATE TABLE `orders` (
   `billing_name` varchar(255) NOT NULL,
   `billing_email` varchar(255) NOT NULL,
   `billing_phone` varchar(20) NOT NULL,
-  `billing_address` text NOT NULL
+  `billing_address` text NOT NULL,
+  `order_items` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `total_price`, `order_status`, `payment_status`, `payment_method`, `shipping_name`, `shipping_email`, `shipping_phone`, `shipping_address`, `billing_name`, `billing_email`, `billing_phone`, `billing_address`) VALUES
-(1, 3, '2024-12-03 12:58:31', 0.00, 'Pending', 'Paid', 'Cash on Delivery', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', '', '', '', ''),
-(2, 3, '2024-12-03 13:05:49', 0.00, 'Pending', 'Paid', 'Cash on Delivery', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', '', '', '', ''),
-(3, 3, '2024-12-03 13:09:53', 0.00, 'Pending', 'Paid', 'Cash on Delivery', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A'),
-(4, 3, '2024-12-03 13:16:53', 0.00, 'Pending', 'Paid', 'Cash on Delivery', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A'),
-(5, 3, '2024-12-03 13:19:41', 0.00, 'Pending', 'Paid', 'Cash on Delivery', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A');
 
 -- --------------------------------------------------------
 
@@ -547,7 +537,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `order_items`
