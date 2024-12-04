@@ -85,7 +85,7 @@
 
 @media (max-width: 992px) {
   #nav-bar .navbar-nav {
-    justify-content: space-between; 
+    justify-content: space-between;
     margin-top: 10px;
   }
 
@@ -346,11 +346,9 @@
   }
 }
 
-
 .footer-box {
   background: #292f35;
   padding: 20px 0;
-  
 }
 .footer-box .footer-company-name {
   text-align: center;
@@ -363,4 +361,101 @@
 }
 .footer-box .footer-company-name a:hover {
   color: #63c7bd;
+}
+
+.account-page {
+  background-color: #f9f9f9;
+  padding: 50px 0;
+}
+
+.account-container {
+  margin: auto;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.account-header {
+  background-color: #6c757d;
+  color: #fff;
+  padding: 20px;
+  border-radius: 15px 15px 0 0;
+  text-align: center;
+}
+
+.profile-image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.account-profile-pic {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #6c757d;
+}
+
+.account-form-label {
+  font-weight: bold;
+}
+.account-header h2 {
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.account-btn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.account-btn:hover {
+  background-color: #5a6268;
+}
+
+.contact-page {
+  background-color: #f9f9f9;
+  padding: 50px 0;
+}
+
+.contact-container {
+  margin: auto;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.contact-header {
+  background-color: #6c757d;
+  color: #fff;
+  padding: 20px;
+  border-radius: 15px 15px 0 0;
+  text-align: center;
+}
+
+.contact-header h2 {
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.contact-btn {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.contact-btn:hover {
+  background-color: #5a6268;
 }
