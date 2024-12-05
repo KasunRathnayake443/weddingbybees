@@ -1,61 +1,56 @@
 <?php
-header('Content-Type: application/json');
 require_once('inc/config.php');
 
-// Fetch the incoming JSON data
-$data = json_decode(file_get_contents('php://input'), true);
+header('Content-Type: application/json');
 
-if (!$data) {
-    echo json_encode(['success' => false, 'message' => 'Invalid data received']);
-    exit();
-}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $input = file_get_contents('php://input');
+    $data = json_decode($input, true);
 
-// Extract data from the request
-$cart = $data['cart'];
-$shipping = $data['shipping'];
-$billing = isset($data['billing']) ? $data['billing'] : $shipping; // Use shipping details if billing is the same
-$paymentMethod = $data['paymentMethod'];
-$totalPrice = 0;
-
-// Calculate total price
-foreach ($cart as $item) {
-    $totalPrice += $item['price'] * $item['quantity'];
-}
-
-// Current datetime for order_date
-$orderDate = date('Y-m-d H:i:s');
-
-// Set default statuses
-$orderStatus = 'Pending';  // Example: Pending, Processing, Completed
-$paymentStatus = 'Unpaid'; // Example: Unpaid, Paid
-
-// Insert order into the orders table
-$sql = "INSERT INTO orders (
-            customer_id, order_date, total_price, order_status, payment_status, payment_method, 
-            shipping_name, shipping_email, shipping_phone, shipping_address, 
-            billing_name, billing_email, billing_phone, billing_address
-        ) VALUES (
-            '{$_SESSION['customer_id']}', '$orderDate', '$totalPrice', '$orderStatus', '$paymentStatus', '$paymentMethod',
-            '{$shipping['name']}', '{$shipping['email']}', '{$shipping['phone']}', '{$shipping['address']}',
-            '{$billing['name']}', '{$billing['email']}', '{$billing['phone']}', '{$billing['address']}'
-        )";
-
-if (mysqli_query($conn, $sql)) {
-    $order_id = mysqli_insert_id($conn);
-
-    // Insert each item into the order_items table
-    foreach ($cart as $item) {
-        $itemName = $item['name'];
-        $itemPrice = $item['price'];
-        $itemQuantity = $item['quantity'];
-
-        $sql_item = "INSERT INTO order_items (order_id, product_name, price, quantity) 
-                     VALUES ('$order_id', '$itemName', '$itemPrice', '$itemQuantity')";
-        mysqli_query($conn, $sql_item);
+    if (!isset($data['cart'], $data['shipping'], $data['paymentMethod'])) {
+        echo json_encode(['success' => false, 'message' => 'Invalid data provided']);
+        exit();
     }
 
-    echo json_encode(['success' => true, 'message' => 'Order placed successfully']);
+    $cart = $data['cart'];
+    $shipping = $data['shipping'];
+    $paymentMethod = $data['paymentMethod'];
+
+    $customerId = $_SESSION['customer_id'];
+
+    // Begin transaction
+    mysqli_begin_transaction($conn);
+
+    try {
+        // Insert into `orders` table
+        $stmt = $conn->prepare("INSERT INTO orders (customer_id, shipping_address, payment_method, total_price) VALUES (?, ?, ?, ?)");
+        $shippingAddress = $shipping['address'];
+        $totalPrice = array_reduce($cart, function ($total, $item) {
+            return $total + ($item['price'] * $item['quantity']);
+        }, 0);
+        $stmt->bind_param("issd", $customerId, $shippingAddress, $paymentMethod, $totalPrice);
+        $stmt->execute();
+        $orderId = $conn->insert_id; // Get the last inserted order ID
+
+        // Insert each cart item into `order_items` table
+        $stmt = $conn->prepare("INSERT INTO order_items (order_id, product_name, quantity, price) VALUES (?, ?, ?, ?)");
+        foreach ($cart as $item) {
+            $stmt->bind_param("isid", $orderId, $item['name'], $item['quantity'], $item['price']);
+            $stmt->execute();
+        }
+
+        // Commit the transaction
+        mysqli_commit($conn);
+
+        echo json_encode(['success' => true]);
+    } catch (Exception $e) {
+        // Rollback the transaction in case of error
+        mysqli_rollback($conn);
+        echo json_encode(['success' => false, 'message' => 'Failed to place order: ' . $e->getMessage()]);
+    }
+
+    $stmt->close();
+    $conn->close();
 } else {
-    echo json_encode(['success' => false, 'message' => 'Failed to place order']);
+    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
-?>

@@ -3,23 +3,6 @@ session_start();
 include('inc/config.php');
 include('inc/links.php');
 
-if (!isset($_SESSION['customer_id'])) {
-    header("Location: login.php");
-    exit();
-}
-
-
-$customerId = $_SESSION['customer_id'];
-$query = "SELECT id, name, email, phone, address, profile_pic FROM customer WHERE id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $customerId);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows === 0) {
-    echo "No customer found!";
-    exit();
-}
 
 $message_sent = false;
 

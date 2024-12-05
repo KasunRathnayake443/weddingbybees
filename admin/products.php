@@ -24,68 +24,69 @@ $categories_result = $conn->query($sql_categories);
     <?php include 'header.php'; ?>
 
     <div class="main-content">
-        <h1>Products</h1>
+        <h1 class="page-title">Products</h1>
 
-        <div class="carousel-wrapper" style="padding-bottom: 450px;">
-            <?php while($row = $result->fetch_assoc()) { ?>
-                <div class="carousel-image">
-                    <img src="../images/products/<?php echo $row['image_url']; ?>" alt="Product Image" />
-                    <h2><?php echo htmlspecialchars($row['name']); ?></h2>
-                    <p><?php echo htmlspecialchars($row['description']); ?></p>
-                    <p>Price: Rs. <?php echo number_format($row['price'], 2); ?></p>
-                    <p>Category: <?php echo htmlspecialchars($row['category']); ?></p>
-                    <p>Quantity: <?php echo htmlspecialchars($row['stock']); ?></p>
-                    <form style="background-color: transparent; border-color: transparent;" action="products.php" method="post" onsubmit="return confirm('Are you sure you want to delete this product?');">
+        <div class="product-grid">
+            <?php while ($row = $result->fetch_assoc()) { ?>
+                <div class="product-card">
+                    <img src="../images/products/<?php echo $row['image_url']; ?>" alt="Product Image" class="product-image" />
+                    <div class="product-details">
+                        <h2 class="product-name"><?php echo htmlspecialchars($row['name']); ?></h2>
+                        <p class="product-description"><?php echo htmlspecialchars($row['description']); ?></p>
+                        <p class="product-price">Price: Rs. <?php echo number_format($row['price'], 2); ?></p>
+                        <p class="product-category">Category: <?php echo htmlspecialchars($row['category']); ?></p>
+                        <p class="product-stock">Stock: <?php echo htmlspecialchars($row['stock']); ?></p>
+                    </div>
+                    <form action="products.php" method="post" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this product?');">
                         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                        <button type="submit" style="background-color:red;" class="delete">Delete</button>
+                        <button type="submit" class="delete-btn">Delete</button>
                     </form>
                 </div>
             <?php } ?>
         </div>
 
+        <h2 class="form-title">Add a New Product</h2>
         <?php
-
-$categories_query = "SELECT * FROM categories";
-$categories_result = mysqli_query($conn, $categories_query);
-?>
-<form action="products.php" method="POST" enctype="multipart/form-data">
-   
-    <label for="new_image">Upload New Image:</label>
-    <input type="file" name="new_image" id="new_image" required>
-
-
-    <label for="name">Product Name:</label>
-    <input type="text" name="name" id="name" required>
-    
-
-    <label for="description">Description:</label>
-    <textarea name="description" id="description" required></textarea>
-
-  
-    <label for="price">Price:</label>
-    <input type="number" step="0.01" name="price" id="price" required>
-
- 
-    <label for="product_category" class="form-label">Category:</label>
-    <select class="form-select" id="product_category" name="product_category" required>
-        <option value="" disabled selected>Select a Category</option>
-        <?php while ($category = mysqli_fetch_assoc($categories_result)): ?>
-            <option value="<?php echo $category['id']; ?>">
-                <?php echo htmlspecialchars($category['name']); ?>
-            </option>
-        <?php endwhile; ?>
-    </select>
-
-  
-    <label for="quantity">Quantity:</label>
-    <input type="number" name="quantity" id="quantity" required>
-
-   
-    <button type="submit" name="submit">Upload</button>
-</form>
-
+        $categories_query = "SELECT * FROM categories";
+        $categories_result = mysqli_query($conn, $categories_query);
+        ?>
+        <form action="products.php" method="POST" enctype="multipart/form-data" class="add-product-form">
+            <div class="form-group">
+                <label for="new_image" class="form-label">Upload New Image:</label>
+                <input type="file" name="new_image" id="new_image" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="name" class="form-label">Product Name:</label>
+                <input type="text" name="name" id="name" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="description" class="form-label">Description:</label>
+                <textarea name="description" id="description" class="form-input" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="price" class="form-label">Price:</label>
+                <input type="number" step="0.01" name="price" id="price" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="product_category" class="form-label">Category:</label>
+                <select id="product_category" name="product_category" class="form-input" required>
+                    <option value="" disabled selected>Select a Category</option>
+                    <?php while ($category = mysqli_fetch_assoc($categories_result)): ?>
+                        <option value="<?php echo $category['id']; ?>">
+                            <?php echo htmlspecialchars($category['name']); ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantity" class="form-label">Quantity:</label>
+                <input type="number" name="quantity" id="quantity" class="form-input" required>
+            </div>
+            <button type="submit" name="submit" class="submit-btn">Upload</button>
+        </form>
     </div>
 </div>
+
 
 
 

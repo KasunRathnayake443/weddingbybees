@@ -30,48 +30,58 @@ $settings2= $result2->fetch_assoc();
     <?php include 'header.php'; ?>
 
     <div class="main-content">
-        <h1>Packages</h1>
+        <h1 class="page-title">Packages</h1>
 
-        <div class="carousel-wrapper" style="padding-bottom: 450px;">
-            <?php while($row = $result->fetch_assoc()) { ?>
-                <div class="carousel-image">
-                    <img src="../images/packages/<?php echo $row['image']; ?>" alt="Package Image" />
-                    <h2><?php echo htmlspecialchars($row['title']); ?></h2>
-                    <p><?php echo htmlspecialchars($row['description']); ?></p>
-                    <p>Price: Rs. <?php echo number_format($row['price'], 2); ?></p>
-                    <form style="background-color: transparent; border-color: transparent;" action="packages.php" method="post" onsubmit="return confirm('Are you sure you want to delete this package?');">
+        <!-- Carousel Section -->
+        <div class="carousel-wrapper">
+            <?php while ($row = $result->fetch_assoc()) { ?>
+                <div class="carousel-card">
+                    <img src="../images/packages/<?php echo $row['image']; ?>" alt="Package Image" class="carousel-image">
+                    <h2 class="package-title"><?php echo htmlspecialchars($row['title']); ?></h2>
+                    <p class="package-description"><?php echo htmlspecialchars($row['description']); ?></p>
+                    <p class="package-price">Price: Rs. <?php echo number_format($row['price'], 2); ?></p>
+                    <form action="packages.php" method="post" class="delete-form" onsubmit="return confirm('Are you sure you want to delete this package?');">
                         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                        <button type="submit" style="background-color:red;" class="delete">Delete</button>
+                        <button type="submit" class="delete-btn">Delete</button>
                     </form>
                 </div>
             <?php } ?>
         </div>
 
-        <form action="packages.php" method="POST" enctype="multipart/form-data">
-            <label for="new_image">Upload New Image:</label>
-            <input type="file" name="new_image" id="new_image" required>
-
-            <label for="title">Title:</label>
-            <input type="text" step="0.01" name="title" id="title" required>
-            
-            <label for="description">Description:</label>
-            <textarea name="description" id="description" required></textarea>
-
-            <label for="price">Price:</label>
-            <input type="number" step="0.01" name="price" id="price" required>
-
-            <button type="submit" name="submit">Upload</button>
+        <!-- Add New Package Form -->
+        <h2 class="form-title">Add a New Package</h2>
+        <form action="packages.php" method="POST" enctype="multipart/form-data" class="add-package-form">
+            <div class="form-group">
+                <label for="new_image" class="form-label">Upload New Image:</label>
+                <input type="file" name="new_image" id="new_image" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" name="title" id="title" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="description" class="form-label">Description:</label>
+                <textarea name="description" id="description" class="form-input" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="price" class="form-label">Price:</label>
+                <input type="number" step="0.01" name="price" id="price" class="form-input" required>
+            </div>
+            <button type="submit" name="submit" class="submit-btn">Upload</button>
         </form>
 
-
-        <form action="packages.php" method="post" enctype="multipart/form-data">
-        <label for="packages_text">Packages Text:</label>
-        <textarea name="packages_text" value="" required> <?php echo htmlspecialchars($settings2['packages_text']); ?></textarea>
-
-        <button name="update" type="submit">Update Text</button>
-    </form>
+        <!-- Update Packages Text Form -->
+        <h2 class="form-title">Update Packages Text</h2>
+        <form action="packages.php" method="POST" enctype="multipart/form-data" class="update-text-form">
+            <div class="form-group">
+                <label for="packages_text" class="form-label">Packages Text:</label>
+                <textarea name="packages_text" id="packages_text" class="form-input" required><?php echo htmlspecialchars($settings2['packages_text']); ?></textarea>
+            </div>
+            <button type="submit" name="update" class="submit-btn">Update Text</button>
+        </form>
     </div>
 </div>
+
 
 
 

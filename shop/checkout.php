@@ -3,7 +3,6 @@ require_once('inc/config.php');
 require_once('inc/session.php');
 require_once('inc/links.php');
 
-
 if (!isset($_SESSION['customer_id'])) {
     echo "<script>
         window.location.href = 'shop.php?notifications2=1';
@@ -11,12 +10,39 @@ if (!isset($_SESSION['customer_id'])) {
     exit();
 }
 
-
 $customer_id = $_SESSION['customer_id'];
 $sql = "SELECT * FROM customer WHERE id = $customer_id";
 $result = mysqli_query($conn, $sql);
 $customer = mysqli_fetch_assoc($result);
 
+// If order processing is done, handle it here
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $orderData = json_decode(file_get_contents('php://input'), true);
+
+    // Extract the order details
+    $cart = $orderData['cart'];
+    $shipping = $orderData['shipping'];
+    $paymentMethod = $orderData['paymentMethod'];
+
+    // Insert the order into the database
+    $orderQuery = "INSERT INTO orders (customer_id, shipping_name, shipping_email, shipping_phone, shipping_address, payment_method) 
+                    VALUES ('$customer_id', '{$shipping['name']}', '{$shipping['email']}', '{$shipping['phone']}', '{$shipping['address']}', '$paymentMethod')";
+    if (mysqli_query($conn, $orderQuery)) {
+        $order_id = mysqli_insert_id($conn);
+
+        // Now, insert each cart item into the order_items table
+        foreach ($cart as $item) {
+            $itemQuery = "INSERT INTO order_items (order_id, product_name, product_price, quantity) 
+                          VALUES ('$order_id', '{$item['name']}', '{$item['price']}', '{$item['quantity']}')";
+            mysqli_query($conn, $itemQuery);
+        }
+
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false]);
+    }
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,89 +56,69 @@ $customer = mysqli_fetch_assoc($result);
     <script src="../js/bootstrap.min.js"></script>
     <link rel="shortcut icon" href="../images/logo/<?php echo $result_general['logo']?>" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-
 </head>
 <body>
     <?php include('header.php'); ?>
 
-
- 
     <div class="container my-5">
-    <h2 class="text-center">Checkout</h2>
-    <div class="card p-4">
-        <div class="row">
-       
-            <div class="col-md-6">
-                <h4>Billing Details</h4>
-                <p><strong>Name:</strong> <?php echo htmlspecialchars($customer['name']); ?></p>
-                <p><strong>Email:</strong> <?php echo htmlspecialchars($customer['email']); ?></p>
-                <p><strong>Phone:</strong> <?php echo htmlspecialchars($customer['phone']); ?></p>
-                <p><strong>Address:</strong> <?php echo htmlspecialchars($customer['address']); ?></p>
+        <h2 class="text-center">Checkout</h2>
+        <div class="card p-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Billing Details</h4>
+                    <p><strong>Name:</strong> <?php echo htmlspecialchars($customer['name']); ?></p>
+                    <p><strong>Email:</strong> <?php echo htmlspecialchars($customer['email']); ?></p>
+                    <p><strong>Phone:</strong> <?php echo htmlspecialchars($customer['phone']); ?></p>
+                    <p><strong>Address:</strong> <?php echo htmlspecialchars($customer['address']); ?></p>
+                </div>
+                <div class="col-md-6">
+                    <h4>Shipping Details</h4>
+                    <form id="shippingForm">
+                        <div class="mb-3">
+                            <label for="shippingName" class="form-label">Name</label>
+                            <input type="text" id="shippingName" name="shippingName" class="form-control" value="<?php echo htmlspecialchars($customer['name']); ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shippingEmail" class="form-label">Email</label>
+                            <input type="email" id="shippingEmail" name="shippingEmail" class="form-control" value="<?php echo htmlspecialchars($customer['email']); ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shippingPhone" class="form-label">Phone</label>
+                            <input type="text" id="shippingPhone" name="shippingPhone" class="form-control" value="<?php echo htmlspecialchars($customer['phone']); ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shippingAddress" class="form-label">Address</label>
+                            <textarea id="shippingAddress" name="shippingAddress" class="form-control" required><?php echo htmlspecialchars($customer['address']); ?></textarea>
+                        </div>
+                    </form>
+                </div>
             </div>
 
-     
-            <div class="col-md-6">
-                <h4>Shipping Details</h4>
-                <form id="shippingForm">
-                    <div class="mb-3">
-                        <label for="shippingName" class="form-label">Name</label>
-                        <input type="text" id="shippingName" name="shippingName" class="form-control" 
-                            value="<?php echo htmlspecialchars($customer['name']); ?>" required>
+            <div class="mt-4">
+                <h4>Payment Method</h4>
+                <form id="paymentForm">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" value="Cash on Delivery" checked>
+                        <label class="form-check-label" for="cashOnDelivery">Cash on Delivery</label>
                     </div>
-                    <div class="mb-3">
-                        <label for="shippingEmail" class="form-label">Email</label>
-                        <input type="email" id="shippingEmail" name="shippingEmail" class="form-control" 
-                            value="<?php echo htmlspecialchars($customer['email']); ?>" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="shippingPhone" class="form-label">Phone</label>
-                        <input type="text" id="shippingPhone" name="shippingPhone" class="form-control" 
-                            value="<?php echo htmlspecialchars($customer['phone']); ?>" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="shippingAddress" class="form-label">Address</label>
-                        <textarea id="shippingAddress" name="shippingAddress" class="form-control" required><?php echo htmlspecialchars($customer['address']); ?></textarea>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" value="Card">
+                        <label class="form-check-label" for="cardPayment">Card</label>
                     </div>
                 </form>
             </div>
+
+            <div class="mt-4">
+                <h4>Order Summary</h4>
+                <div id="cartItems"></div>
+                <p class="fw-bold">Total: Rs: <span id="totalPrice">0.00</span></p>
+            </div>
+
+            <button id="placeOrderButton" class="btn btn-success w-100">Place Order</button>
         </div>
-
-        
-        <div class="mt-4">
-            <h4>Payment Method</h4>
-            <form id="paymentForm">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="cashOnDelivery" value="Cash on Delivery" checked>
-                    <label class="form-check-label" for="cashOnDelivery">
-                        Cash on Delivery
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="cardPayment" value="Card">
-                    <label class="form-check-label" for="cardPayment">
-                        Card
-                    </label>
-                </div>
-            </form>
-        </div>
-
-       
-        <div class="mt-4">
-            <h4>Order Summary</h4>
-            <div id="cartItems"></div>
-            <p class="fw-bold">Total: Rs: <span id="totalPrice">0.00</span></p>
-        </div>
-
-    
-        <button id="placeOrderButton" class="btn btn-success w-100">Place Order</button>
-
     </div>
-</div>
-
-
 
     <?php include('footer.php'); ?>
 
@@ -149,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     renderCart();
 
-    // Handle remove item
+
     cartItemsContainer.addEventListener('click', function (event) {
         if (event.target.classList.contains('remove-item')) {
             const itemIndex = event.target.getAttribute('data-index');
@@ -159,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Place order button functionality
+  
     placeOrderButton.addEventListener('click', function () {
         const shippingForm = document.getElementById('shippingForm');
         const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
@@ -182,8 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Send data to process_order.php
-        fetch('process_order.php', {
+        fetch('checkout.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -194,20 +199,16 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             if (data.success) {
                 alert("Order placed successfully!");
-                sessionStorage.removeItem('cart'); // Clear cart
-                window.location.href = 'order_confirmation.php';
+                sessionStorage.removeItem('cart'); 
+                location.reload(); 
             } else {
                 alert("Failed to place the order. Please try again.");
             }
         })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("An error occurred while placing the order.");
+        .catch(err => {
+            alert("An error occurred. Please try again.");
         });
     });
 });
-
-
 </script>
-
 </html>
