@@ -1,0 +1,27 @@
+
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# <IfModule mod_rewrite.c>
+#     RewriteBase /
+#     Options +FollowSymlinks -MultiViews
+#     RewriteEngine On
+    
+#     # Exclude admin.php from rewrite rules
+#     RewriteCond %{REQUEST_URI} ^/admin\.php$ [NC]
+#     RewriteRule ^ - [L]
+
+#     # To rewrite `/path/index.php` to `/path/`
+#     RewriteCond %{THE_REQUEST} ^GET\s(.*/)index\.php [NC]
+#     RewriteRule . %1 [NE,R=301,L]
+
+#     # To remove .php extension from other URLs
+#     RewriteCond %{THE_REQUEST} ^GET\s.+\.php [NC]
+#     RewriteRule ^(.+)\.php$ /$1 [NE,R=301,L,NC]
+    
+#     # Internally process .php files without .php in URL
+#     RewriteCond %{REQUEST_URI} !\.php$ [NC]
+#     RewriteCond %{REQUEST_FILENAME}.php -f
+#     RewriteRule . %{REQUEST_URI}.php [L]
+# </IfModule>

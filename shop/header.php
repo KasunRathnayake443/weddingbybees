@@ -39,7 +39,7 @@ require_once('inc/session.php');
                             $row = mysqli_fetch_assoc($result);
                         ?>
                         <a href="account.php">
-                            <img src="../images/profile_pics/<?php echo htmlspecialchars($row['profile_pic']); ?>" alt="Profile" class="profile-pic">
+                            <img src="<?php echo htmlspecialchars($row['profile_pic']); ?>" alt="Profile" class="profile-pic">
                         </a>
                     </li>
                 <?php else: ?>

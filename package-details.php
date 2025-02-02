@@ -59,6 +59,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/custom.css">
 	<link rel="stylesheet" href="css/alerts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
    <style>
    .container {
@@ -269,6 +270,7 @@ h1, h2 {
                         <li><a class="nav-link" href="index.php#gallery">Gallery</a></li>
                         <li><a class="nav-link" href="index.php#services">Services</a></li>
 						<li><a class="nav-link" href="index.php#contact">Contact</a></li>
+                        <li><a class="nav-link shop-link" style="background: #ffc107; color: #ffffff; font-weight: bold; border-radius: 5px;" href="shop/shop.php"><i class="fas fa-cart-shopping"></i> Shop</a></li>
                     </ul>
                 </div>
             </div>
