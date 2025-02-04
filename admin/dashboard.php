@@ -23,7 +23,7 @@ $admin = $result->fetch_assoc();
    
 </head>
 <body>
-<div class="dashboard-container">
+<div class="dashboard-container" >
 
     <?php include 'header.php' ?>
         <div class="main-content">         

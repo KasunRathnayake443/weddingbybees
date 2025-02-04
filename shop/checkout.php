@@ -15,33 +15,50 @@ $sql = "SELECT * FROM customer WHERE id = $customer_id";
 $result = mysqli_query($conn, $sql);
 $customer = mysqli_fetch_assoc($result);
 
-// If order processing is done, handle it here
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $orderData = json_decode(file_get_contents('php://input'), true);
 
-    // Extract the order details
-    $cart = $orderData['cart'];
-    $shipping = $orderData['shipping'];
-    $paymentMethod = $orderData['paymentMethod'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $paymentMethod = $_POST['paymentMethod'];
+    $shippingName = $_POST['shippingName'];
+    $shippingEmail = $_POST['shippingEmail'];
+    $shippingPhone = $_POST['shippingPhone'];
+    $shippingAddress = $_POST['shippingAddress'];
 
-    // Insert the order into the database
-    $orderQuery = "INSERT INTO orders (customer_id, shipping_name, shipping_email, shipping_phone, shipping_address, payment_method) 
-                    VALUES ('$customer_id', '{$shipping['name']}', '{$shipping['email']}', '{$shipping['phone']}', '{$shipping['address']}', '$paymentMethod')";
-    if (mysqli_query($conn, $orderQuery)) {
-        $order_id = mysqli_insert_id($conn);
+ 
+    $cart = json_decode($_POST['cart'], true);
 
-        // Now, insert each cart item into the order_items table
-        foreach ($cart as $item) {
-            $itemQuery = "INSERT INTO order_items (order_id, product_name, product_price, quantity) 
-                          VALUES ('$order_id', '{$item['name']}', '{$item['price']}', '{$item['quantity']}')";
-            mysqli_query($conn, $itemQuery);
-        }
-
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false]);
+  
+    $totalPrice = 0;
+    foreach ($cart as $item) {
+        $totalPrice += $item['price'] * $item['quantity'];
     }
-    exit();
+
+    
+    $orderSql = "INSERT INTO orders (customer_id, shipping_name, shipping_email, shipping_phone, shipping_address, total_price, payment_method, status) 
+                 VALUES ($customer_id, '$shippingName', '$shippingEmail', '$shippingPhone', '$shippingAddress', $totalPrice, '$paymentMethod', 'Pending')";
+    mysqli_query($conn, $orderSql);
+    $orderId = mysqli_insert_id($conn); 
+
+    
+    foreach ($cart as $item) {
+        $productId = $item['id'];
+        $quantity = $item['quantity'];
+        $price = $item['price'];
+        $itemSql = "INSERT INTO order_items (order_id, product_id, quantity, price) 
+                    VALUES ($orderId, $productId, $quantity, $price)";
+        mysqli_query($conn, $itemSql);
+    }
+
+   
+    echo "<script>sessionStorage.removeItem('cart');</script>";
+
+   
+    if ($paymentMethod === 'Cash on Delivery') {
+        header("Location: order_confirmation.php?order_id=$orderId");
+        exit();
+    } elseif ($paymentMethod === 'Card') {
+        header("Location: payment.php?order_id=$orderId");
+        exit();
+    }
 }
 ?>
 
@@ -122,93 +139,70 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <?php include('footer.php'); ?>
 
-</body>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
-    const cartItemsContainer = document.getElementById('cartItems');
-    const totalPriceContainer = document.getElementById('totalPrice');
-    const placeOrderButton = document.querySelector('.btn-success');
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const totalPriceContainer = document.getElementById('totalPrice');
+        const placeOrderButton = document.getElementById('placeOrderButton');
 
-    function renderCart() {
-        cartItemsContainer.innerHTML = '';
-        if (cart.length === 0) {
-            cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
-            totalPriceContainer.textContent = '0.00';
-        } else {
-            let total = 0;
-            cart.forEach((item, index) => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                cartItemsContainer.innerHTML += `
-                    <div class="cart-item d-flex justify-content-between align-items-center mb-2">
-                        <div>
-                            <p class="m-0">${item.name} - Rs: ${item.price} x ${item.quantity} = Rs: ${itemTotal.toFixed(2)}</p>
-                        </div>
-                        <button class="btn btn-danger btn-sm remove-item" data-index="${index}">Remove</button>
-                    </div>
-                `;
-            });
-            totalPriceContainer.textContent = total.toFixed(2);
-        }
-    }
-
-    renderCart();
-
-
-    cartItemsContainer.addEventListener('click', function (event) {
-        if (event.target.classList.contains('remove-item')) {
-            const itemIndex = event.target.getAttribute('data-index');
-            cart.splice(itemIndex, 1); 
-            sessionStorage.setItem('cart', JSON.stringify(cart)); 
-            renderCart(); 
-        }
-    });
-
-  
-    placeOrderButton.addEventListener('click', function () {
-        const shippingForm = document.getElementById('shippingForm');
-        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-
-        const shippingDetails = {
-            name: shippingForm.shippingName.value,
-            email: shippingForm.shippingEmail.value,
-            phone: shippingForm.shippingPhone.value,
-            address: shippingForm.shippingAddress.value,
-        };
-
-        const orderData = {
-            cart: cart,
-            shipping: shippingDetails,
-            paymentMethod: paymentMethod,
-        };
-
-        if (cart.length === 0) {
-            alert("Your cart is empty.");
-            return;
-        }
-
-        fetch('checkout.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(orderData),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("Order placed successfully!");
-                sessionStorage.removeItem('cart'); 
-                location.reload(); 
+        function renderCart() {
+            cartItemsContainer.innerHTML = '';
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                totalPriceContainer.textContent = '0.00';
             } else {
-                alert("Failed to place the order. Please try again.");
+                let total = 0;
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <p class="m-0">${item.name} - Rs: ${item.price} x ${item.quantity} = Rs: ${itemTotal.toFixed(2)}</p>
+                            </div>
+                            <button class="btn btn-danger btn-sm remove-item" data-index="${index}">Remove</button>
+                        </div>
+                    `;
+                });
+                totalPriceContainer.textContent = total.toFixed(2);
             }
-        })
-        .catch(err => {
-            alert("An error occurred. Please try again.");
+        }
+
+        renderCart();
+
+        cartItemsContainer.addEventListener('click', function (event) {
+            if (event.target.classList.contains('remove-item')) {
+                const itemIndex = event.target.getAttribute('data-index');
+                cart.splice(itemIndex, 1);
+                sessionStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+            }
+        });
+
+        placeOrderButton.addEventListener('click', function () {
+            const shippingForm = document.getElementById('shippingForm');
+            const paymentForm = document.getElementById('paymentForm');
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            const formData = new FormData();
+            formData.append('shippingName', document.getElementById('shippingName').value);
+            formData.append('shippingEmail', document.getElementById('shippingEmail').value);
+            formData.append('shippingPhone', document.getElementById('shippingPhone').value);
+            formData.append('shippingAddress', document.getElementById('shippingAddress').value);
+            formData.append('paymentMethod', paymentMethod);
+            formData.append('cart', JSON.stringify(cart));
+
+            fetch('checkout.php', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                }
+            });
         });
     });
-});
-</script>
+    </script>
+</body>
 </html>

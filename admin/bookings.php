@@ -5,7 +5,7 @@ include '../inc/links.php';
 ?>
 
 <?php
-// Query to get booking details from the bookings table
+
 $sql = "SELECT id, package_name, package_price, customer_name, email, wedding_date, venue, created_at FROM bookings ORDER BY created_at DESC";
 $result = $conn->query($sql);
 
@@ -52,7 +52,7 @@ if ($result->num_rows > 0) {
                 </thead>
                 <tbody>
                     <?php
-                    // Display the booking details in the table
+                    
                     if (!empty($bookings)) {
                         foreach ($bookings as $booking) {
                             echo "<tr>";

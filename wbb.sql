@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2024 at 09:42 AM
+-- Generation Time: Feb 04, 2025 at 04:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -147,7 +147,9 @@ CREATE TABLE `customer` (
 
 INSERT INTO `customer` (`id`, `name`, `email`, `phone`, `address`, `password`, `profile_pic`, `created_at`) VALUES
 (2, 'Kasun Rathnayake', 'madkasunmax@gmail.com', '0718948284', '550/36 A', '$2y$10$X5ytg8ybyepbDXxxDZxg0eaCSbMZdpOZgxLxxr05hW/7XgBXsFXOm', 'png-clipart-computer-icons-font-awesome-user-font-awesome-miscellaneous-rectangle-thumbnail.png', '2024-11-30 16:46:38'),
-(3, 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', '$2y$10$hqV.8FQCEotFpMdGU8Hv2ObnLeUIXa8/./yAb.dnBZX1kBoW1xH6a', 'file.png', '2024-12-02 18:35:41');
+(3, 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', '$2y$10$hqV.8FQCEotFpMdGU8Hv2ObnLeUIXa8/./yAb.dnBZX1kBoW1xH6a', '../images/profile_pics/MSI.png', '2024-12-02 18:35:41'),
+(4, 'qww', 'www@gmail.com', '1111111111', '111', '$2y$10$dSDYvVSSCVmtBPDZ7yP4pOAomwtyyxowJQ/KVeM7HJ97fn09rosqy', 'MSI_PRO.jpg', '2025-02-04 15:51:59'),
+(5, 'we', 'we@gmail.com', '11111111111', '111', '$2y$10$5cREitx3HKo4.y7nwdpPku1rtokcm1.fM.lfkXRUtOl.pgeh6QU0.', 'MSI_MPG.jpg', '2025-02-04 15:54:19');
 
 -- --------------------------------------------------------
 
@@ -238,23 +240,30 @@ INSERT INTO `messages` (`id`, `name`, `email`, `subject`, `message`, `created_at
 --
 
 CREATE TABLE `orders` (
-  `order_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `total_price` decimal(10,2) NOT NULL,
-  `order_status` enum('Pending','Shipped','Delivered','Canceled') DEFAULT 'Pending',
-  `payment_status` enum('Pending','Paid','Failed') DEFAULT 'Pending',
-  `payment_method` enum('Cash on Delivery','Card') DEFAULT 'Cash on Delivery',
-  `shipping_name` varchar(255) NOT NULL,
-  `shipping_email` varchar(255) NOT NULL,
-  `shipping_phone` varchar(20) NOT NULL,
+  `shipping_name` varchar(100) NOT NULL,
+  `shipping_email` varchar(100) NOT NULL,
+  `shipping_phone` varchar(15) NOT NULL,
   `shipping_address` text NOT NULL,
-  `billing_name` varchar(255) NOT NULL,
-  `billing_email` varchar(255) NOT NULL,
-  `billing_phone` varchar(20) NOT NULL,
-  `billing_address` text NOT NULL,
-  `order_items` text DEFAULT NULL
+  `total_price` decimal(10,2) NOT NULL,
+  `payment_method` enum('Cash on Delivery','Card') NOT NULL,
+  `status` enum('Pending','Completed','Cancelled') DEFAULT 'Pending',
+  `order_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customer_id`, `shipping_name`, `shipping_email`, `shipping_phone`, `shipping_address`, `total_price`, `payment_method`, `status`, `order_date`) VALUES
+(1, 3, 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 15000.00, 'Cash on Delivery', 'Pending', '2025-02-04 14:26:49'),
+(2, 3, 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 15000.00, 'Cash on Delivery', '', '2025-02-04 14:30:33'),
+(3, 3, 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 15000.00, 'Cash on Delivery', 'Pending', '2025-02-04 14:30:37'),
+(4, 3, 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 15000.00, 'Cash on Delivery', 'Pending', '2025-02-04 14:31:01'),
+(5, 3, 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 15000.00, 'Cash on Delivery', '', '2025-02-04 14:47:30'),
+(6, 3, 'Kasun Rathnayake', 'test123@gmail.com', '0718948284', '550/36 A', 32000.00, 'Card', 'Pending', '2025-02-04 14:56:44'),
+(7, 4, 'qww', 'www@gmail.com', '1111111111', '111', 8500.00, 'Cash on Delivery', 'Pending', '2025-02-04 15:53:54');
 
 -- --------------------------------------------------------
 
@@ -266,11 +275,29 @@ CREATE TABLE `order_items` (
   `id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `total_price` decimal(10,2) NOT NULL
+  `price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`) VALUES
+(1, 1, 19, 1, 6500.00),
+(2, 1, 20, 1, 8500.00),
+(3, 2, 19, 1, 6500.00),
+(4, 2, 20, 1, 8500.00),
+(5, 3, 19, 1, 6500.00),
+(6, 3, 20, 1, 8500.00),
+(7, 4, 19, 1, 6500.00),
+(8, 4, 20, 1, 8500.00),
+(9, 5, 19, 1, 6500.00),
+(10, 5, 20, 1, 8500.00),
+(11, 6, 19, 1, 6500.00),
+(12, 6, 20, 2, 8500.00),
+(13, 6, 25, 1, 8500.00),
+(14, 7, 22, 1, 8500.00);
 
 -- --------------------------------------------------------
 
@@ -440,7 +467,7 @@ ALTER TABLE `messages`
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`order_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `customer_id` (`customer_id`);
 
 --
@@ -448,8 +475,7 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `order_id` (`order_id`);
 
 --
 -- Indexes for table `package_images`
@@ -513,7 +539,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `gallery`
@@ -537,13 +563,13 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `package_images`
@@ -577,14 +603,13 @@ ALTER TABLE `users`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order_items`
 --
 ALTER TABLE `order_items`
-  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

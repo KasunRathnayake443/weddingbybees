@@ -32,7 +32,7 @@ $settings2= $result2->fetch_assoc();
     <div class="main-content">
         <h1 class="page-title">Packages</h1>
 
-        <!-- Carousel Section -->
+      
         <div class="carousel-wrapper">
             <?php while ($row = $result->fetch_assoc()) { ?>
                 <div class="carousel-card">

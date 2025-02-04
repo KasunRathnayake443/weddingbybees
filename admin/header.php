@@ -23,6 +23,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <ul id="shopDropdown" class="dropdown-menu">
                     <li><a href="products.php" class="products-link <?php echo ($current_page == 'products.php') ? 'active' : ''; ?>">Products</a></li>
                     <li><a href="orders.php" class="orders-link <?php echo ($current_page == 'orders.php') ? 'active' : ''; ?>">Orders</a></li>
+                    
                 </ul>
             </li>
             <li><a href="logout.php" onclick="return confirmLogout();" class="">Logout</a></li>

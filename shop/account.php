@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form action="account.php" method="POST" enctype="multipart/form-data">
                 <div class="profile-image-wrapper">
                     <?php if ($customer['profile_pic']): ?>
-                        <img src="<?php echo htmlspecialchars($customer['profile_pic']); ?>" alt="Profile Picture" class="account-profile-pic">
+                        <img src="../images/profile_pics/<?php echo htmlspecialchars($customer['profile_pic']); ?>" alt="Profile Picture" class="account-profile-pic">
                     <?php else: ?>
                         <img src="https://via.placeholder.com/120" alt="Profile Picture" class="account-profile-pic">
                     <?php endif; ?>

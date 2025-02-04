@@ -1,6 +1,9 @@
+
+
 .dashboard-container {
   padding: 20px;
   width: calc(100% - 250px);
+  border-color: white;
 }
 
 .carousel-wrapper {
@@ -219,6 +222,8 @@ button.delete-btn {
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  background-attachment: fixed;
+  border-color: transparent;
 }
 
 .dashboard-container {
@@ -353,6 +358,7 @@ body {
   padding: 20px;
   font-family: Arial, sans-serif;
   background-color: #f4f4f9;
+  border-color: white;
 }
 
 .page-title {
@@ -496,6 +502,7 @@ body {
   padding: 20px;
   font-family: Arial, sans-serif;
   background-color: #f4f4f9;
+  border-color: white;
 }
 
 .page-title {
