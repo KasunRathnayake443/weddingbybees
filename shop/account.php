@@ -8,8 +8,9 @@ if (!isset($_SESSION['customer_id'])) {
     exit();
 }
 
-
 $customerId = $_SESSION['customer_id'];
+
+
 $query = "SELECT id, name, email, phone, address, profile_pic FROM customer WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $customerId);
@@ -23,6 +24,12 @@ if ($result->num_rows === 0) {
 
 $customer = $result->fetch_assoc();
 
+// Fetch user orders
+$orderQuery = "SELECT id, order_date, status FROM orders WHERE customer_id = ? ORDER BY order_date DESC";
+$orderStmt = $conn->prepare($orderQuery);
+$orderStmt->bind_param("i", $customerId);
+$orderStmt->execute();
+$orderResult = $orderStmt->get_result();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
@@ -30,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'];
     $address = $_POST['address'];
 
- 
     if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === UPLOAD_ERR_OK) {
         $profilePic = '../images/profile_pics/' . basename($_FILES['profile_pic']['name']);
         move_uploaded_file($_FILES['profile_pic']['tmp_name'], $profilePic);
@@ -38,14 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $profilePic = $customer['profile_pic'];
     }
 
- 
     $updateQuery = "UPDATE customer SET name = ?, email = ?, phone = ?, address = ?, profile_pic = ? WHERE id = ?";
     $updateStmt = $conn->prepare($updateQuery);
     $updateStmt->bind_param("sssssi", $name, $email, $phone, $address, $profilePic, $customerId);
-    
+
     if ($updateStmt->execute()) {
         echo "Details updated successfully!";
-    
         header("Location: account.php?notifications1=1");
         exit();
     } else {
@@ -54,8 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,9 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
      <link rel="stylesheet" href="shop.css">
-
-
-
 </head>
 <body>
 
@@ -135,24 +134,107 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button type="submit" class="account-btn">Update Details</button>
                 </div>
             </form>
-        </div>
+    
+            
+            <div class="orders-section mt-5">
+    <?php
+    $queryOrders = "SELECT * FROM orders WHERE customer_id = ? ORDER BY FIELD(status, 'Cancelled'), order_date DESC";
+    $stmtOrders = $conn->prepare($queryOrders);
+    $stmtOrders->bind_param("i", $customerId);
+    $stmtOrders->execute();
+    $ordersResult = $stmtOrders->get_result();
+    ?>
+
+    <h2 class="mt-4">My Orders</h2>
+    <table class="table table-bordered mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Status</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php while ($order = $ordersResult->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($order['id']); ?></td>
+                    <td><?php echo htmlspecialchars($order['order_date']); ?></td>
+                    <td><?php echo htmlspecialchars($order['status']); ?></td>
+                    <td>Rs.<?php echo number_format($order['total_price'], 2); ?></td>
+                    <td>
+                        <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#orderModal<?php echo $order['id']; ?>">View Details</button>
+
+                        <!-- Order Details Modal -->
+                        <div class="modal fade" id="orderModal<?php echo $order['id']; ?>" tabindex="-1" aria-labelledby="orderModalLabel<?php echo $order['id']; ?>" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Order Details (Order #<?php echo $order['id']; ?>)</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>Shipping Name:</strong> <?php echo htmlspecialchars($order['shipping_name']); ?></p>
+                                        <p><strong>Email:</strong> <?php echo htmlspecialchars($order['shipping_email']); ?></p>
+                                        <p><strong>Phone:</strong> <?php echo htmlspecialchars($order['shipping_phone']); ?></p>
+                                        <p><strong>Address:</strong> <?php echo htmlspecialchars($order['shipping_address']); ?></p>
+                                        <p><strong>Payment Method:</strong> <?php echo htmlspecialchars($order['payment_method']); ?></p>
+                                        <p><strong>Total Price:</strong> Rs.<?php echo number_format($order['total_price'], 2); ?></p>
+                                        <p><strong>Status:</strong> <?php echo htmlspecialchars($order['status']); ?></p>
+
+                                        <h6>Order Items:</h6>
+                                        <ul>
+                                            <?php
+                                            $orderItemsQuery = "SELECT product_id, quantity, price FROM order_items WHERE order_id = ?";
+                                            $itemsStmt = $conn->prepare($orderItemsQuery);
+                                            $itemsStmt->bind_param("i", $order['id']);
+                                            $itemsStmt->execute();
+                                            $itemsResult = $itemsStmt->get_result();
+
+                                            while ($item = $itemsResult->fetch_assoc()):
+                                            ?>
+                                                <li>Product ID: <?php echo $item['product_id']; ?> (x<?php echo $item['quantity']; ?>) - Rs.<?php echo number_format($item['price'], 2); ?></li>
+                                            <?php endwhile; ?>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <?php if ($order['status'] === 'Pending'): ?>
+                                            <form method="POST" action="cancel_order.php">
+                                                <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
+                                                <button type="submit" class="btn btn-danger">Cancel Order</button>
+                                            </form>
+                                        <?php elseif ($order['status'] === 'Completed'): ?>
+                                        <?php else: ?>
+                                        <p class="text-warning">For cancelation, contact Wedding by Bees.</p>
+                                   
+                                        <?php endif; ?>
+                                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+</div>
+
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-
-
 <?php require('footer.php'); ?>
-
 
                 <div class="success2" id="alertBox1">
                     <i class="fa fa-check  fa-2x"></i> 
-                    <span class="message-text">Account Details Successfully</span>                            
+                    <span class="message-text">Profile Updated Successfully</span>                            
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                </div>  
+                </div> 
+
 
 </body>
-
 </html>
 
 <script src="../js/notifications.js"></script>

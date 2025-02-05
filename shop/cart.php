@@ -11,7 +11,7 @@
             </div>
             <div class="modal-footer">
                 <a href="checkout.php" class="btn btn-success">Go to Checkout</a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue Shopping</button>
+                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Continue Shopping</button>
             </div>
         </div>
     </div>
