@@ -194,20 +194,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                             while ($item = $itemsResult->fetch_assoc()):
                                             ?>
-                                                <li>Product ID: <?php echo $item['product_id']; ?> (x<?php echo $item['quantity']; ?>) - Rs.<?php echo number_format($item['price'], 2); ?></li>
+                                            <?php $productQuery = "SELECT name FROM products WHERE id = ?"; ?>
+                                            <?php $productStmt = $conn->prepare($productQuery); ?>
+                                            <?php $productStmt->bind_param("i", $item['product_id']); ?>
+                                            <?php $productStmt->execute(); ?>
+                                            <?php $productResult = $productStmt->get_result(); ?>
+                                            <?php $product = $productResult->fetch_assoc(); ?>
+                                            <li><?php echo $product['name']; ?> (x<?php echo $item['quantity']; ?>) - Rs.<?php echo number_format($item['price'], 2); ?></li>
+                                                
                                             <?php endwhile; ?>
                                         </ul>
                                     </div>
-                                    <div class="modal-footer">
+                                                                        <div class="modal-footer">
                                         <?php if ($order['status'] === 'Pending'): ?>
                                             <form method="POST" action="cancel_order.php">
                                                 <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
                                                 <button type="submit" class="btn btn-danger">Cancel Order</button>
                                             </form>
-                                        <?php elseif ($order['status'] === 'Completed'): ?>
+                                        <?php elseif (in_array($order['status'], ['Cancelled', 'Completed', 'Delivered'])): ?>
+                                            
                                         <?php else: ?>
-                                        <p class="text-warning">For cancelation, contact Wedding by Bees.</p>
-                                   
+                                            <p class="text-warning">For cancellation, contact Wedding by Bees.</p>
                                         <?php endif; ?>
                                         <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
                                     </div>
