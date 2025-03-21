@@ -599,6 +599,22 @@ button:focus {
   font-size: 18px;
 }
 
+.col-lg-4 {
+  opacity: 0;
+  transform: translateY(50px); 
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+
+.col-lg-4.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+
 /*------------------------------------------------------------------
     Gallery
 -------------------------------------------------------------------*/
@@ -663,6 +679,22 @@ button:focus {
 .gallery-box ul li a:hover .overlay {
   opacity: 1;
 }
+.popup-gallery li {
+  display: block; 
+  opacity: 0;
+  transform: translateY(50px); 
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+
+.popup-gallery li.fade-in-left {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
 
 /*------------------------------------------------------------------
     services

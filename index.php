@@ -62,6 +62,8 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="css/custom.css">
 	<link rel="stylesheet" href="css/alerts.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
 
 
    
@@ -185,95 +187,165 @@ $result = $conn->query($sql);
 
 	
 
-	
 	<div id="packages" class="package-box">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="title-box">
-						<h2>Our Packages</h2>
-						<p><?php echo $general_settings['packages_text']?> </p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-			<?php foreach ($result_package_images as $key => $image) { ?>
-				<div class="col-lg-4 col-md-6 col-sm-12">
-					<div class="single-package">
-						<div class="package-img">
-							<img class="img-fluid" src="images/packages/<?php echo $image['image']; ?>" alt="Package Image" />
-						</div>
-						<div class="package-info">
-							<h4><?php echo $image['title']; ?></h4> 
-							<a href="package-details.php?id=<?php echo $image['id']; ?>" class="btn btn-primary">See More</a> 
-						</div>
-					</div>
-				</div>
-			<?php } ?>
-
-			</div>
-		</div>
-	</div>
-	
-	
-	
-	
-	<div id="gallery" class="gallery-box">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="title-box">
-						<h2>Gallery</h2>
-						<p><?php echo $general_settings['gallery_text']?> </p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<ul class="popup-gallery clearfix">
-				<?php foreach ($result_gallery_images as $key => $image) { ?>
-					<li>
-						<a href="images/gallery/<?php echo $image['image']; ?>">
-							<img class="img-fluid" src="images/gallery/<?php echo $image['image']; ?>" alt="single image">
-							<span class="overlay"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
-						</a>
-					</li>
-					<?php } ?>
-				</ul>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-box">
+                    <h2>Our Packages</h2>
+                    <p><?php echo $general_settings['packages_text']?></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <?php foreach ($result_package_images as $key => $image) { ?>
+                <div class="col-lg-4 col-md-6 col-sm-12 package-card" data-aos="fade-up">
+                    <div class="single-package">
+                        <div class="package-img">
+                            <img class="img-fluid" src="images/packages/<?php echo $image['image']; ?>" alt="Package Image" />
+                        </div>
+                        <div class="package-info">
+                            <h4><?php echo $image['title']; ?></h4>
+                            <a href="package-details.php?id=<?php echo $image['id']; ?>" class="btn btn-primary">See More</a>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+</div>
 
 
+<script>
+    AOS.init({
+        duration: 1000, 
+        once: true
+    });
+</script>
 
-	<div id="services" class="events-box">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="title-box">
-						<h2>Services</h2>
-						<p>"Your wedding day is one of the most important days of your life, and we are honored to be a part of it. Our team at <?php echo $general_settings['website_name']?> is passionate about bringing your vision to life. Browse through our services to find the perfect elements that will make your celebration uniquely yours, from stunning decorations to exquisite catering." </p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-			<div class="row" >
-			<?php while($row = $result->fetch_assoc()) { ?>
-					<div class="col-lg-4 col-md-6 col-sm-12" >
-						<div class="event-inner">
-							<div class="event-img">
-								<img class="img-fluid" src="images/services/<?php echo $row['image']; ?>" alt="<?php echo htmlspecialchars($row['name']); ?>" />
-							</div>
-							<h2><?php echo htmlspecialchars($row['name']); ?></h2>
-							<p><?php echo htmlspecialchars($row['description']); ?></p>
-						
-						</div>
-					</div>
-				<?php } ?>
-			</div>
-			</div>
-		</div>
-	</div>
+
+<div id="gallery" class="gallery-box">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-box">
+                    <h2>Gallery</h2>
+                    <p><?php echo $general_settings['gallery_text']?> </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <ul class="popup-gallery clearfix">
+                <?php foreach ($result_gallery_images as $key => $image) { ?>
+                    <li class="gallery-item">
+                        <a href="images/gallery/<?php echo $image['image']; ?>">
+                            <img class="img-fluid" src="images/gallery/<?php echo $image['image']; ?>" alt="single image">
+                            <span class="overlay"><i class="fa fa-heart-o" aria-hidden="true"></i></span>
+                        </a>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const galleryItems = document.querySelectorAll(".popup-gallery li");
+
+        if (galleryItems.length === 0) return;
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("fade-in-left");
+                } else {
+                    entry.target.classList.remove("fade-in-left");
+                }
+            });
+        }, { threshold: 0.2 });
+
+        galleryItems.forEach(item => observer.observe(item));
+    });
+</script>
+
+
+<style>
+    .popup-gallery li {
+        display: block;
+        opacity: 0;
+        transform: translateY(50px); 
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        will-change: opacity, transform;
+    }
+
+    .popup-gallery li.fade-in-left {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+
+
+
+
+
+
+<div id="services" class="events-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-box">
+                    <h2>Services</h2>
+                    <p>"Your wedding day is one of the most important days of your life, and we are honored to be a part of it. Our team at <?php echo $general_settings['website_name']?> is passionate about bringing your vision to life. Browse through our services to find the perfect elements that will make your celebration uniquely yours, from stunning decorations to exquisite catering." </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <?php while($row = $result->fetch_assoc()) { ?>
+                <div class="col-lg-4 col-md-6 col-sm-12" data-aos="fade-up"> 
+                    <div class="event-inner">
+                        <div class="event-img">
+                            <img class="img-fluid" src="images/services/<?php echo $row['image']; ?>" alt="<?php echo htmlspecialchars($row['name']); ?>" />
+                        </div>
+                        <h2><?php echo htmlspecialchars($row['name']); ?></h2>
+                        <p><?php echo htmlspecialchars($row['description']); ?></p>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        AOS.init({
+            duration: 1000, 
+            once: true
+        });
+    });
+</script>
+
+
+<style>
+    .events-box .col-lg-4 {
+        opacity: 0;
+        transform: translateY(50px); 
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .events-box .col-lg-4[data-aos="fade-up"] {
+        opacity: 1;
+        transform: translateY(0); 
+    }
+</style>
+
 	
+
+
 	<div id="contact" class="contact-box">
     <div class="container">
         <div class="row">
@@ -378,6 +450,15 @@ $result = $conn->query($sql);
 	<script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
+
+	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000, 
+        once: true 
+    });
+</script>
 </body>
 </html>
 
