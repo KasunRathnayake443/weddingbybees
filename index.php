@@ -214,7 +214,80 @@ $result = $conn->query($sql);
         </div>
     </div>
 </div>
+<style>
+    
+.package-card {
+    perspective: 1000px; 
+}
 
+.single-package {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+    transform-style: preserve-3d;
+    z-index: 1;
+}
+
+
+.single-package:hover {
+    transform: translateY(-10px) rotateX(5deg); 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+.package-img {
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+}
+
+.package-img img {
+    transition: transform 0.5s ease;
+    width: 100%;
+}
+
+.single-package:hover .package-img img {
+    transform: scale(1.1);
+}
+
+
+.single-package::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 0;
+}
+.single-package:hover::before {
+    opacity: 1;
+}
+
+
+.package-info h4, .package-info a {
+    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+.single-package:hover h4 {
+    color: #ff5722; 
+}
+
+.single-package:hover a {
+    background: #ff5722;
+    border-color: #ff5722;
+}
+
+.package-info a {
+    position: relative;
+    z-index: 2; 
+}
+</style>
 
 <script>
     AOS.init({
@@ -331,16 +404,65 @@ $result = $conn->query($sql);
 
 
 <style>
-    .events-box .col-lg-4 {
-        opacity: 0;
-        transform: translateY(50px); 
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
 
-    .events-box .col-lg-4[data-aos="fade-up"] {
-        opacity: 1;
-        transform: translateY(0); 
-    }
+.event-inner {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+}
+
+.event-inner:hover {
+    transform: translateY(-10px) scale(1.05); 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+.event-img {
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+}
+
+.event-img img {
+    transition: transform 0.5s ease;
+}
+
+.event-inner:hover .event-img img {
+    transform: scale(1.1);
+}
+
+
+.event-inner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.event-inner:hover::before {
+    opacity: 1;
+}
+
+
+.event-inner h2, .event-inner p {
+    transition: color 0.3s ease-in-out;
+}
+
+.event-inner:hover h2 {
+    color: #e91e63;
+}
+
+.event-inner:hover p {
+    color: #444; 
+}
+
 </style>
 
 	

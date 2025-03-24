@@ -712,11 +712,7 @@ button:focus {
 .event-img {
   margin-bottom: 15px;
 }
-.event-img:hover {
-  size: 120%;
-  scale: 1.1;
-  transition: 0.5s;
-}
+
 
 .event-inner a {
   background: #dd666c;
@@ -729,6 +725,8 @@ button:focus {
 .event-inner a:hover {
   background: #63c7bd;
 }
+
+
 
 /*------------------------------------------------------------------
     Contact
