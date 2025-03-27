@@ -71,36 +71,66 @@ $products_result = mysqli_query($conn, $products_query);
 
         <!-- Products Section -->
         <div class="col-md-9">
-            <div class="row">
-                <?php while ($product = mysqli_fetch_assoc($products_result)): ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 d-flex flex-column">
-                            <img src="../images/products/<?php echo htmlspecialchars($product['image_url']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['name']); ?>">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
-                                <p class="card-text"><?php echo htmlspecialchars($product['description']); ?></p>
-                                <p class="card-text fw-bold">Rs: <?php echo number_format($product['price'], 2); ?></p>
-                                <div class="mt-auto">
-                                    <?php if ($product['stock'] > 0): ?>
-                                        <button class="btn btn-primary w-100 add-to-cart-btn" 
-                                                data-id="<?php echo $product['id']; ?>" 
-                                                data-name="<?php echo htmlspecialchars($product['name']); ?>" 
-                                                data-price="<?php echo $product['price']; ?>">
-                                            Add to Cart
-                                        </button>
-                                    <?php else: ?>
-                                        <span class="badge bg-danger w-100">Out of Stock</span>
-                                    <?php endif; ?>
-                                </div>
+    <div class="row">
+        <?php while ($product = mysqli_fetch_assoc($products_result)): ?>
+            <div class="col-md-4 mb-4">
+                <div class="card-container">
+                    <div class="card h-100 d-flex flex-column flip-card">
+                        <img src="../images/products/<?php echo htmlspecialchars($product['image_url']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title"><?php echo htmlspecialchars($product['name']); ?></h5>
+                            <p class="card-text"><?php echo htmlspecialchars($product['description']); ?></p>
+                            <p class="card-text fw-bold">Rs: <?php echo number_format($product['price'], 2); ?></p>
+                            <div class="mt-auto">
+                                <?php if ($product['stock'] > 0): ?>
+                                    <button class="btn btn-primary w-100 add-to-cart-btn" 
+                                            data-id="<?php echo $product['id']; ?>" 
+                                            data-name="<?php echo htmlspecialchars($product['name']); ?>" 
+                                            data-price="<?php echo $product['price']; ?>">
+                                        Add to Cart
+                                    </button>
+                                <?php else: ?>
+                                    <span class="badge bg-danger w-100">Out of Stock</span>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
-                <?php endwhile; ?>
+                </div>
             </div>
-        </div>
+        <?php endwhile; ?>
+    </div>
+</div>
     </div>
 </div>
 </div>
+
+<style>
+    .card-container {
+        perspective: 1000px;
+    }
+
+    .flip-card {
+        transform: rotateY(180deg);
+        transition: transform 0.8s ease-in-out;
+    }
+
+    .flip-card.show {
+        transform: rotateY(0deg);
+    }
+</style>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+            document.querySelectorAll('.flip-card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, index * 200); 
+            });
+        }, 200);
+    });
+</script>
 
 <div class="modal" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
